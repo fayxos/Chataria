@@ -1,0 +1,84 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net5.0-windows</TargetFramework>
+    <UseWPF>true</UseWPF>
+    <ApplicationIcon>Images\Logo\logo-color.ico</ApplicationIcon>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Controls\Chat\ChatMessage\rusty.jpg" />
+    <None Remove="Controls\rusty.jpg" />
+    <None Remove="Fonts\fontawesome-webfont.ttf" />
+    <None Remove="Images\Samples\9FKtL5.png" />
+    <None Remove="Images\Samples\rusty.jpg" />
+    <None Remove="Images\Samples\rusty2.jpg" />
+    <None Remove="info.png" />
+    <None Remove="logo-color.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Images\Samples\9FKtL5.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\Samples\rusty.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\Samples\rusty2.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Dna.Framework" Version="1.0.7.19" />
+    <PackageReference Include="Fody" Version="6.5.1">
+      <PrivateImages>all</PrivateImages>
+      <IncludeImages>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeImages>
+    </PackageReference>
+    <PackageReference Include="Ninject" Version="3.3.4" />
+    <PackageReference Include="PropertyChanged.Fody" Version="3.3.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Chataria.Core\Chataria.Core.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Controls\Chat\ChatMessage\rusty.jpg" />
+    <Resource Include="Controls\rusty.jpg" />
+    <Resource Include="Fonts\fontawesome-webfont.ttf" />
+    <Resource Include="info.png" />
+    <Resource Include="logo-color.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Controls\Input\PasswordEntryControl.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Page Update="Controls\Chat\ChatMessage\ChatMessageListControl.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+    </Page>
+    <Page Update="Controls\Input\PasswordEntryControl.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="DialogWindow.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+    </Page>
+    <Page Update="pages\Start\MainPage.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+    </Page>
+    <Page Update="Styles\Scroll.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+    </Page>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Storage\Images\" />
+  </ItemGroup>
+
+</Project>

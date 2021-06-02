@@ -1,0 +1,174 @@
+﻿<UserControl x:Class="Chataria.ChatMessageListItemControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Chataria"
+             xmlns:core="clr-namespace:Chataria.Core;assembly=Chataria.Core"
+             mc:Ignorable="d"
+             d:DesignWidth="300">
+    <Border Padding="5"
+            d:DataContext="{x:Static core:ChatMessageListItemDesignModel.Instance}">
+        
+        <!-- Chat message container -->
+        <Grid HorizontalAlignment="{Binding SentByMe, Converter={local:SentByMeToAlignmentConverter}}"
+              Margin="10 10 10 0">
+
+            <Grid.Triggers>
+                <!-- Mouse over shows time -->
+                <EventTrigger RoutedEvent="MouseEnter">
+                    <BeginStoryboard>
+                        <Storyboard Storyboard.TargetName="ExtraDetails" Storyboard.TargetProperty="Opacity">
+                            <DoubleAnimation To="1" Duration="00:00:00.5"/>
+                        </Storyboard>
+                    </BeginStoryboard>
+                    <BeginStoryboard>
+                        <Storyboard Storyboard.TargetName="ExtraDetails2" Storyboard.TargetProperty="Opacity">
+                            <DoubleAnimation To="1" Duration="00:00:00.5"/>
+                        </Storyboard>
+                    </BeginStoryboard>
+                </EventTrigger>
+
+                <!-- Mouse over hides time -->
+                <EventTrigger RoutedEvent="MouseLeave">
+                    <BeginStoryboard>
+                        <Storyboard Storyboard.TargetName="ExtraDetails" Storyboard.TargetProperty="Opacity">
+                            <DoubleAnimation To="0" Duration="00:00:00.5"/>
+                        </Storyboard>
+                    </BeginStoryboard>
+                    <BeginStoryboard>
+                        <Storyboard Storyboard.TargetName="ExtraDetails2" Storyboard.TargetProperty="Opacity">
+                            <DoubleAnimation To="0" Duration="00:00:00.5"/>
+                        </Storyboard>
+                    </BeginStoryboard>
+                </EventTrigger>
+            </Grid.Triggers>
+           
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+
+            <!--Speech bubble rectangle -->
+            <Border CornerRadius="15"
+                    Grid.Column="1"
+                    Background="{Binding SentByMe, Converter={local:SentByMeToBackgroundConverter}}" Grid.RowSpan="4"
+                >
+                <Grid>
+
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    
+                    <!-- Image Attachment -->
+                    <Button Visibility="{Binding HasImageAttachment, Converter={local:BooleanToVisibilityConverter}, ConverterParameter=True}"
+                            Style="{StaticResource NoStyleButton}"
+                            Command="{Binding ShowImageCommand}"
+                            >
+                        <Grid
+                          MaxHeight="500"
+                          MaxWidth="500">
+                            <!-- Mask For rounded corners-->
+                            <Border CornerRadius="{Binding HasMessage, Converter={local:BooleanToCornerRadiusConverter}}" 
+                            x:Name="Mask"
+                            Background="{StaticResource BackgroundLightBrush}"
+                            />
+
+                            <!-- Image -->
+                            <Grid>
+                                <Grid.OpacityMask>
+                                    <VisualBrush Visual="{Binding ElementName=Mask}" />
+                                </Grid.OpacityMask>
+
+                                <Image Source="{Binding ImageAttachment.LocalFilePath}"/>
+                            </Grid>
+                        </Grid>
+                    </Button>
+
+                    <!--
+                    TODO:
+                    Video Attachment
+                    Document Attachment
+                    Voice Attachment
+                    -->
+
+                    <!-- Message text -->
+                    <TextBlock 
+                        Visibility="{Binding HasMessage, Converter={local:BooleanToVisibilityConverter}, ConverterParameter=True}"
+                        Margin="13"
+                        Grid.Row="1"
+                        VerticalAlignment="Center"   
+                        TextWrapping="Wrap"
+                        FontSize="18"
+                        FontFamily="{StaticResource LatoBold}"
+                        Foreground="{StaticResource BackgroundLightBrush}"
+                        Text="{Binding Message}"
+                        />
+                </Grid>
+            </Border>
+
+            <!-- Chat bubble anchor
+            <Path 
+                Grid.Row="2"
+                Stroke="{StaticResource MainBlueBrush}"
+                Margin="15 -1 15 0"
+                Fill="{StaticResource MainBlueBrush}"
+                StrokeThickness="2"
+                Data="M 0,0 L 15,15 L 30,0"/>
+            -->
+
+            <!-- Send time for not send by me -->
+            <StackPanel Grid.Column="0"
+                  Opacity="0"
+                  Name="ExtraDetails"
+                  Visibility="{Binding SentByMe, Converter={local:SentByMeToVisibilityConverter}}"
+                  HorizontalAlignment="Left"
+                  Orientation="Vertical"
+                  VerticalAlignment="Center"
+                  Margin="5 0 5 0">
+
+                <TextBlock Text="{Binding MessageSentTime, Converter={local:TimeToDisplayTimeConverter}}"
+                        Foreground="{StaticResource ForegroundLightBrush}"
+                        FontFamily="{StaticResource LatoBold}"
+                        FontSize="{StaticResource FontSizeSmall}"
+                        Padding="0 0 0 0" Margin="0 0 0 0"/>
+                <TextBlock Text="Read"
+                        Visibility="{Binding MessageRead, Converter={local:MessageReadToVisibilityConverter}}"
+                        Foreground="{StaticResource ForegroundLightBrush}"
+                        FontFamily="{StaticResource LatoBold}"
+                        FontSize="{StaticResource FontSizeSmall}"                         
+                        Padding="0 0 0 0" Margin="0 0 0 0"/>
+            </StackPanel>
+
+            <!-- Send time for send by me -->
+            <StackPanel Grid.Column="2"
+                  Opacity="0"
+                  Name="ExtraDetails2"
+                  Visibility="{Binding SentByMe, Converter={local:SentByMeToVisibilityConverter}, ConverterParameter=True}"
+                  HorizontalAlignment="Left"
+                  Orientation="Vertical"
+                  VerticalAlignment="Center"
+                  Margin="5 0 5 0">
+
+                <TextBlock Text="{Binding MessageSentTime, Converter={local:TimeToDisplayTimeConverter}}"
+                        Foreground="{StaticResource ForegroundLightBrush}"
+                        FontFamily="{StaticResource LatoBold}"
+                        FontSize="{StaticResource FontSizeSmall}"
+                        Padding="0 0 0 0" Margin="0 0 0 0"/>
+                <TextBlock Text="Read"
+                        Visibility="{Binding MessageRead, Converter={local:MessageReadToVisibilityConverter}}"
+                        Foreground="{StaticResource ForegroundLightBrush}"
+                        FontFamily="{StaticResource LatoBold}"
+                        FontSize="{StaticResource FontSizeSmall}"                         
+                        Padding="0 0 0 0" Margin="0 0 0 0"/>
+            </StackPanel>
+
+        </Grid>
+    </Border>
+</UserControl>

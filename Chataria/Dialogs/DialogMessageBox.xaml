@@ -1,0 +1,27 @@
+﻿<local:BaseDialogUserControl x:Class="Chataria.DialogMessageBox"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Chataria"
+             xmlns:core="clr-namespace:Chataria.Core;assembly=Chataria.Core"
+             mc:Ignorable="d">
+    <StackPanel 
+        d:DataContext="{x:Static core:MessageBoxDialogDesignModel.Instance}"
+        Background="{StaticResource ForegroundLightBrush}"
+                >
+        <TextBlock Text="{Binding Message, FallbackValue=Test}" 
+                   Padding="5"
+                   Foreground="{StaticResource BackgroundDarkBrush}"/>
+
+        <Button 
+            IsDefault="True"
+            IsCancel="True"
+            Style="{StaticResource SubmitButtonStyle}"
+            FontSize="{StaticResource FontSizeRegular}"
+            HorizontalAlignment="Center"
+            Margin="10"
+            Command="{Binding CloseCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:BaseDialogUserControl}}}"
+            Content="{Binding OkText}"/>
+    </StackPanel>
+</local:BaseDialogUserControl>

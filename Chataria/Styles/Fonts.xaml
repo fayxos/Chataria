@@ -1,0 +1,83 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:Chataria"
+                    xmlns:system="clr-namespace:System;assembly=mscorlib">
+
+    <FontFamily x:Key="LatoThin">pack://application;,,,/Fonts/#Lato Thin</FontFamily>
+    <FontFamily x:Key="LatoRegular">pack://application;,,,/Fonts/#Lato Regular</FontFamily>
+    <FontFamily x:Key="LatoBold">pack://application;,,,/Fonts/#Lato Bold</FontFamily>
+    <FontFamily x:Key="FontAwesome">pack://application;,,,/Fonts/#FontAwesome</FontFamily>
+
+    <system:Double x:Key="FontSizeSmaller">10</system:Double>
+    <system:Double x:Key="FontSizeSmall">12</system:Double>
+    <system:Double x:Key="FontSizeRegular">14</system:Double>
+    <system:Double x:Key="FontSizeLarge">20</system:Double>
+    <system:Double x:Key="FontSizeXLarge">24</system:Double>
+    <system:Double x:Key="FontSizeXXLarge">30</system:Double>
+
+    <Style TargetType="{x:Type Control}" x:Key="BaseStyle">
+        <Setter Property="FontFamily" Value="{StaticResource LatoThin}" />
+        <Setter Property="FontSize" Value="{StaticResource FontSizeRegular}" />
+    </Style>
+
+    <Style TargetType="{x:Type TextBlock}" x:Key="BaseTextBlockStyle">
+        <Setter Property="FontFamily" Value="{StaticResource LatoThin}" />
+        <Setter Property="FontSize" Value="{StaticResource FontSizeRegular}" />
+    </Style>
+
+    <Style TargetType="{x:Type Button}" BasedOn="{StaticResource BaseStyle}" />
+    <Style TargetType="{x:Type Label}" BasedOn="{StaticResource BaseStyle}" />
+    <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource BaseStyle}" />
+    <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource BaseTextBlockStyle}" />
+    <Style TargetType="{x:Type ListView}" BasedOn="{StaticResource BaseStyle}" />
+
+    <system:String x:Key="FontAwesomeChatIcon">&#xf086;</system:String>
+    <system:String x:Key="FontAwesomeUserIcon">&#xf007;</system:String>
+    <system:String x:Key="FontAwesomePictureIcon">&#xf1c5;</system:String>
+    <system:String x:Key="FontAwesomeCogIcon">&#xf013;</system:String>
+    <system:String x:Key="FontAwesomeSearchIcon">&#xf002;</system:String>
+    <system:String x:Key="FontAwesomeEllipsisIcon">&#xf141;</system:String>
+    <system:String x:Key="FontAwesomeEllipsisVerticalIcon">&#xf142;</system:String>
+    <system:String x:Key="FontAwesomePaperclipIcon">&#xf0c6;</system:String>
+    <system:String x:Key="FontAwesomeEmojiIcon">&#xf118;</system:String>
+    <system:String x:Key="FontAwesomeArrowLeftIcon">&#xf060;</system:String>
+    <system:String x:Key="FontAwesomeTickIcon">&#xf00c;</system:String>
+    <system:String x:Key="FontAwesomeCloseIcon">&#xf00d;</system:String>
+    
+    <!-- Side menu icons -->
+    <system:String x:Key="FontAwesomePerson">&#xf007;</system:String>
+    <system:String x:Key="FontAwesomeGroup">&#xf0c0;</system:String>
+    <system:String x:Key="FontAwesomeGlobe">&#xf0ac;</system:String>
+    <system:String x:Key="FontAwesomeProfile">&#xf2bd;</system:String>
+    <system:String x:Key="FontAwesomeSettings">&#xf013;</system:String>
+    <system:String x:Key="FontAwesomeInfo">&#xf129;</system:String>
+    <system:String x:Key="FontAwesomeSend">&#xf061;</system:String>
+
+
+    <!-- Emojis -->
+    <system:String x:Key="EmojiSmile">😀</system:String>
+    <system:String x:Key="EmojiLaugh">😂</system:String>
+    <system:String x:Key="EmojiCool">😎</system:String>
+    <system:String x:Key="EmojiZunge">😋</system:String>
+    <system:String x:Key="EmojiLove">😍</system:String>
+    <system:String x:Key="EmojiStarr">🙄</system:String>
+    <system:String x:Key="EmojiMüde">😴</system:String>
+    <system:String x:Key="EmojiVerschlossen">🤐</system:String>
+    <system:String x:Key="EmojiGeld">🤑</system:String>
+    <system:String x:Key="EmojiGähnen">🥱</system:String>
+    <system:String x:Key="EmojiWeinen">😭</system:String>
+    <system:String x:Key="EmojiAngry">😡</system:String>
+    <system:String x:Key="EmojiSchlecht">🤢</system:String>
+    <system:String x:Key="EmojiEngel">😇</system:String>
+    <system:String x:Key="EmojiBetteln">🥺</system:String>
+    <system:String x:Key="EmojiTraurig">😕</system:String>
+    
+    
+    <!-- Attachment Icons -->
+    <system:String x:Key="FontAwesomeImageIcon">&#xf03e;</system:String>
+    <system:String x:Key="FontAwesomeFileIcon">&#xf0f6;</system:String>
+    <system:String x:Key="FontAwesomeCameraIcon">&#xf030;</system:String>
+    <system:String x:Key="FontAwesomeContactIcon">&#xf2be;</system:String>
+    
+
+</ResourceDictionary>

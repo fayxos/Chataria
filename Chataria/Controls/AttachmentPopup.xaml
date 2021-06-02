@@ -1,0 +1,47 @@
+﻿<UserControl x:Class="Chataria.AttachmentPopup"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Chataria"
+             mc:Ignorable="d" 
+             d:DesignHeight="100" d:DesignWidth="300">
+
+
+
+    <StackPanel Orientation="Horizontal" 
+                Height="Auto" 
+                VerticalAlignment="Center" 
+                HorizontalAlignment="Left"
+                Background="Transparent"
+                Margin="15 5 0 0"
+                >
+        <Button Style="{StaticResource AttachmentButton}"
+                Content="{StaticResource FontAwesomePictureIcon}"
+                Background="{StaticResource AttachPurpleBrush}"
+                ToolTip="Picture"
+                Click="Button_Click"
+                Command="{Binding PictureCommand}"
+                />
+        <Button Style="{StaticResource AttachmentButton}"
+                Content="{StaticResource FontAwesomeCameraIcon}"
+                Background="{StaticResource AttachPinkBrush}"
+                ToolTip="Camera"
+                Command="{Binding CameraCommand}"
+                />
+        <Button Style="{StaticResource AttachmentButton}"
+                Content="{StaticResource FontAwesomeFileIcon}"
+                Background="{StaticResource AttachDarkBlueBrush}"
+                ToolTip="Document"
+                Command="{Binding DocumentCommand}"
+                />
+        <Button Style="{StaticResource AttachmentButton}"
+                Content="{StaticResource FontAwesomeContactIcon}"
+                Background="{StaticResource AttachLightBlueBrush}"
+                ToolTip="Contact"
+                Command="{Binding ContactCommand}"
+                />
+        <local:BaseDialogUserControl Height="28" Width="100"/>
+    </StackPanel>
+
+</UserControl>

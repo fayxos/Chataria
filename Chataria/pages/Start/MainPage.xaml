@@ -1,0 +1,27 @@
+﻿<local:BasePage x:TypeArguments="core:LoginViewModel" x:Class="Chataria.MainPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Chataria"
+      xmlns:core="clr-namespace:Chataria.Core;assembly=Chataria.Core"
+      mc:Ignorable="d" 
+      MinWidth="560"
+      d:DesignHeight="819" d:DesignWidth="1536"
+      MinHeight="430" 
+      x:Name="Page">
+
+    <!-- Main Content -->
+    <Border BorderBrush="{StaticResource MainBlueBrush}"
+            BorderThickness="0 1 0 0">
+        <!-- Page content -->
+        <local:MainHost Grid.Column="1" 
+                CurrentMainContent="{Binding ApplicationViewModel.CurrentMainContent,
+                                        Source={x:Static local:ViewModelLocator.Instance}}" 
+                CurrentPageViewModel="{Binding ApplicationViewModel.CurrentPageViewModel,
+                                            Source={x:Static local:ViewModelLocator.Instance}}"
+                        />
+    </Border>
+        
+    
+</local:BasePage>
