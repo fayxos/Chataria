@@ -60,6 +60,11 @@ namespace Chataria.Core
         public ICommand AttachmentButtonCommand { get; set; }
 
         /// <summary>
+        /// The command to close the image attachment overlay
+        /// </summary>
+        public ICommand CLoseImageAttachment { get; set; }
+
+        /// <summary>
         /// The command for when the area outside of any popup is clicked
         /// </summary>
         public ICommand PopupClickawayCommand { get; set; }
@@ -106,6 +111,7 @@ namespace Chataria.Core
             CameraCommand = new RelayCommand(AttachCamera);
             DocumentCommand = new RelayCommand(AttachDocument);
             ContactCommand = new RelayCommand(AttachContact);
+            CLoseImageAttachment = new RelayCommand(CloseImageAttach);
 
             // Make a default menu
             AttachmentMenu = new ExamplePopupMenuViewModel();
@@ -123,6 +129,15 @@ namespace Chataria.Core
             // Toggle menu visibility
             AttachmentMenuVisible ^= true;
 
+        }
+
+        public void CloseImageAttach()
+        {
+            // Set visibility to false
+            SendImageOverlayVisible = false;
+
+            // Clear Local Image Path
+            LocalImagePath = string.Empty;
         }
 
         /// <summary>

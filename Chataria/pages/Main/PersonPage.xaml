@@ -91,21 +91,35 @@
             </Grid>
 
             <!-- Send Image Overlay -->
-            <!-- Chat Dialog -->
             <Border Grid.Row="1" 
                     CornerRadius="10 0 0 0"
                     Panel.ZIndex="1"
-                    Visibility="{Binding SendImageOverlayVisible, Converter={local:BooleanToVisibilityConverter}, ConverterParameter=True}"
+                    
                     >
                 <Border Margin="15 10 14 0" 
                         CornerRadius="15" 
-                        Background="Black">
-                    <Image VerticalAlignment="Center"
-                           HorizontalAlignment="Center"
-                           Source="{Binding LocalImagePath}"
-                           Margin="50"
-                           />
+                        Background="Black"
+                        Visibility="{Binding SendImageOverlayVisible, Converter={local:BooleanToVisibilityConverter}, ConverterParameter=True}"  
+                            >
+                    <Grid>
+                        <Image VerticalAlignment="Center"
+                               HorizontalAlignment="Center"
+                               Source="{Binding LocalImagePath}"
+                               Margin="50"
+                               />
+
+                        <Button Style="{StaticResource IconGrowButton}" 
+                                VerticalAlignment="Top"
+                                HorizontalAlignment="Right"
+                                Foreground="Red"
+                                Background="Transparent"
+                                Content="{StaticResource FontAwesomeCloseIcon}"
+                                Command="{Binding CLoseImageAttachment}"
+                                Height="50"
+                                FontFamily="{StaticResource FontAwesome}"/>
+                    </Grid>
                 </Border>
+                
                 
             </Border>
             
