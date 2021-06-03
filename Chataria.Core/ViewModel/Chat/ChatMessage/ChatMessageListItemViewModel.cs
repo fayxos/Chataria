@@ -11,11 +11,6 @@ namespace Chataria.Core
         #region Public Properties
 
         /// <summary>
-        /// A flag if image should be shown big
-        /// </summary>
-        public static bool ViewImage { get; set; }
-
-        /// <summary>
         /// The display name of the sender of the message
         /// </summary>
         public string SenderName { get; set; }
@@ -107,7 +102,11 @@ namespace Chataria.Core
 
         private void ShowImage()
         {
-            ViewImage = true;
+            // Set path
+            IoC.Application.ViewImageLocalPath = ImageAttachment.LocalFilePath;
+
+            // Set View Image Overlay true
+            IoC.Application.ViewImageOverlayVisible = true;
         }
 
         #endregion

@@ -539,9 +539,6 @@
             </Grid>
 
             <Grid Grid.Column="1">
-                
-                <!-- TODO: ViewImageControl -->
-
                 <!-- Page content -->
                 <local:PageHost
                    d:DataContext=""
@@ -549,9 +546,37 @@
                                      Source={x:Static local:ViewModelLocator.Instance}, 
                                      Converter={local:ApplicationPageValueConverter}}"
                    CurrentPage="{Binding}" />
-            </Grid>
-            
 
+                <!-- View Image Overlay -->
+                <Border Background="Black"
+                        Margin="15"
+                        CornerRadius="15"
+                        Visibility="{Binding ApplicationViewModel.ViewImageOverlayVisible, 
+                                     Source={x:Static local:ViewModelLocator.Instance}, 
+                                     Converter={local:BooleanToVisibilityConverter},
+                                     ConverterParameter=True}"
+                        >
+                    <Grid>
+                        <Image VerticalAlignment="Center"
+                               HorizontalAlignment="Center"
+                               Source="{Binding ApplicationViewModel.ViewImageLocalPath, 
+                                     Source={x:Static local:ViewModelLocator.Instance}}"
+                               Margin="50"
+                               />
+
+                        <Button Style="{StaticResource IconGrowButton}" 
+                                VerticalAlignment="Top"
+                                HorizontalAlignment="Right"
+                                Foreground="Red"
+                                Background="Transparent"
+                                Content="{StaticResource FontAwesomeCloseIcon}"
+                                Command="{Binding CloseViewImageOverlayCommand}"
+                                Height="50"
+                                FontFamily="{StaticResource FontAwesome}"/>
+                    </Grid>
+
+                </Border>
+            </Grid>
         </Grid>
 
 

@@ -135,15 +135,14 @@ namespace Chataria
         /// </summary>
         public bool DimmableOverlayVisible { get; set; }
 
-
-        /// <summary>
-        /// A flag if image should be shown big
-        /// </summary>
-        public static bool ViewImageOverlayVisible { get; set; } = ChatMessageListItemViewModel.ViewImage;
-
         #endregion
 
         #region Commands
+
+        /// <summary>
+        /// The command to close the view image overlay
+        /// </summary>
+        public ICommand CloseViewImageOverlayCommand { get; set; }
 
         /// <summary>
         /// The command to minimize the window
@@ -189,6 +188,7 @@ namespace Chataria
             MaximizeCommand = new RelayCommand(() => mWindow.WindowState ^= WindowState.Maximized);
             CloseCommand = new RelayCommand(() => mWindow.Close());
             MenuCommand = new RelayCommand(() => SystemCommands.ShowSystemMenu(mWindow, GetMousePosition()));
+            CloseViewImageOverlayCommand = new RelayCommand(CloseViewImageOverlay);
 
             // Fix window resize issue
             mWindowResizer = new WindowResizer(mWindow);
@@ -250,6 +250,14 @@ namespace Chataria
             OnPropertyChanged(nameof(OuterMarginSize));
             OnPropertyChanged(nameof(WindowRadius));
             OnPropertyChanged(nameof(WindowCornerRadius));
+        }
+
+        private void CloseViewImageOverlay()
+        {
+            IoC.Application.ViewImageOverlayVisible = false;
+
+            // CLear path
+            IoC.Application.ViewImageLocalPath = string.Empty;
         }
 
 

@@ -35,7 +35,17 @@ namespace Chataria.Core
         /// True if the edit profile menu should be shown
         /// </summary>
         public bool EditProfileMenuVisible { get; set; } = false;
-        
+
+        /// <summary>
+        /// A flag if image should be shown big
+        /// </summary>
+        public bool ViewImageOverlayVisible { get; set; }
+
+        /// <summary>
+        /// The file path for the image to show big 
+        /// </summary>
+        public string ViewImageLocalPath { get; set; }
+
         /// <summary>
         /// Navigates to the specified page
         /// </summary>
