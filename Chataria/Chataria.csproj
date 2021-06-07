@@ -14,6 +14,9 @@
     <None Remove="Images\Samples\9FKtL5.png" />
     <None Remove="Images\Samples\rusty.jpg" />
     <None Remove="Images\Samples\rusty2.jpg" />
+    <None Remove="Images\WindowControls\close.png" />
+    <None Remove="Images\WindowControls\maximieren.png" />
+    <None Remove="Images\WindowControls\minimize.png" />
     <None Remove="info.png" />
     <None Remove="logo-color.png" />
   </ItemGroup>
@@ -48,6 +51,9 @@
     <Resource Include="Controls\Chat\ChatMessage\rusty.jpg" />
     <Resource Include="Controls\rusty.jpg" />
     <Resource Include="Fonts\fontawesome-webfont.ttf" />
+    <Resource Include="Images\WindowControls\close.png" />
+    <Resource Include="Images\WindowControls\maximieren.png" />
+    <Resource Include="Images\WindowControls\minimize.png" />
     <Resource Include="info.png" />
     <Resource Include="logo-color.png" />
   </ItemGroup>

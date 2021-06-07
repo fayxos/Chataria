@@ -2,6 +2,7 @@
 using Microsoft.Win32;
 using System;
 using System.IO;
+using System.Reflection;
 using System.Windows.Controls;
 
 
@@ -26,7 +27,7 @@ namespace Chataria
         private void Button_Click(object sender, System.Windows.RoutedEventArgs e)
         {
             // Open File Explorer
-            OpenFileDialog dialog = new OpenFileDialog();
+            OpenFileDialog dialog = new();
 
             dialog.Filter = "png files (*.png)|*.png|jpg files (*.jpg)|*.jpg|jpeg files (*.jpeg)|*.jpeg";
             dialog.Title = "Select an Image File";
@@ -39,14 +40,19 @@ namespace Chataria
             {
                 string[] items = dialog.FileName.Split(@"\");
                 string lastItem = items[items.Length - 1];
-                string savePath = "C:/Users/fayxs/source/repos/Chataria/Chataria/Storage/Images/" + lastItem;
+                string projectPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location).Split(@"bin")[0];
+                string savePath = projectPath + "/Storage/Images/" + lastItem;
                 try
                 {
                     File.Copy(dialog.FileName, savePath);
-                } 
+                }
                 catch { }
                 finally
                 {
+                    // Temporal fix (remove later)
+                    if (IoC.Application.CurrentPageViewModel == null)
+                        IoC.Application.CurrentPageViewModel = new ChatMessageListViewModel();
+
                     // Set Local Storage Path
                     (IoC.Application.CurrentPageViewModel as ChatMessageListViewModel).LocalImagePath = savePath;
                 }

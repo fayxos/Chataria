@@ -76,7 +76,7 @@
                                             <Image
                                             RenderOptions.BitmapScalingMode="HighQuality"
                                             x:Name="buttonImage"
-                                            Source="C:\Users\fayxs\source\repos\Chataria\Chataria\Images/WindowControls/minimize.png"
+                                            Source="/Images/WindowControls/minimize.png"
                                             Margin="0,0,1,0"
                                             Width="35"/>
                                             <ContentPresenter
@@ -105,7 +105,7 @@
                                             <Image
                                             RenderOptions.BitmapScalingMode="HighQuality"
                                             x:Name="buttonImage"
-                                            Source="C:\Users\fayxs\source\repos\Chataria\Chataria\Images/WindowControls/maximieren.png"
+                                            Source="/Images/WindowControls/maximieren.png"
                                             Margin="0,0,1,0"
                                             Width="30"/>
                                             <ContentPresenter
@@ -134,7 +134,7 @@
                                             <Image
                                             RenderOptions.BitmapScalingMode="HighQuality"
                                             x:Name="buttonImage"
-                                            Source="C:\Users\fayxs\source\repos\Chataria\Chataria\Images/WindowControls/close.png"
+                                            Source="/Images/WindowControls/close.png"
                                             Margin="0,0,1,0"
                                             Width="25"/>
                                             <ContentPresenter
