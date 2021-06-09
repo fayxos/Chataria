@@ -1,5 +1,7 @@
 ﻿using Chataria.Core;
 using System;
+using System.IO;
+using System.Reflection;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -130,8 +132,38 @@ namespace Chataria
         }
 
 
+
         #endregion
 
-        
+        private void MessageText_Drop(object sender, DragEventArgs e)
+        {
+            if(e.Data.GetDataPresent(DataFormats.FileDrop))
+            {
+                string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
+                string fileName = Path.GetFullPath(files[0]);
+
+                string[] items = fileName.Split(@"\");
+                string lastItem = items[items.Length - 1];
+                string projectPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location).Split(@"bin")[0];
+                string savePath = projectPath + "/Storage/Images/" + lastItem;
+
+                try
+                {
+                    File.Copy(fileName, savePath);
+                }
+                catch { }
+                finally
+                {
+                    // Temporal fix (remove later)
+                    if (IoC.Application.CurrentPageViewModel == null)
+                        IoC.Application.CurrentPageViewModel = new ChatMessageListViewModel();
+
+                    // Set Local Storage Path
+                    (IoC.Application.CurrentPageViewModel as ChatMessageListViewModel).LocalImagePath = savePath;
+                    (IoC.Application.CurrentPageViewModel as ChatMessageListViewModel).SendImageOverlayVisible = true;
+                }
+
+            }
+        }
     }
 }

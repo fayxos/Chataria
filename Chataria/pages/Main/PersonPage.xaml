@@ -6,7 +6,10 @@
       xmlns:local="clr-namespace:Chataria"
       xmlns:core="clr-namespace:Chataria.Core;assembly=Chataria.Core"
       mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800">
+      d:DesignHeight="450" d:DesignWidth="800"
+      AllowDrop="True"
+      Drop="MessageText_Drop"
+                >
 
     <Grid>
 
@@ -213,7 +216,6 @@
                     </Grid>
                 </Border>
             </Border>
-
         </Grid>
 
     </Grid>
