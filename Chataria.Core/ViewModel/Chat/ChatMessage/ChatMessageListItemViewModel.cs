@@ -102,11 +102,15 @@ namespace Chataria.Core
 
         private void ShowImage()
         {
-            // Set path
-            IoC.Application.ViewImageLocalPath = ImageAttachment.LocalFilePath;
+            if(ImageAttachment != null)
+            {
+                // Set path
+                IoC.Application.ViewImageLocalPath = ImageAttachment.LocalFilePath;
 
-            // Set View Image Overlay true
-            IoC.Application.ViewImageOverlayVisible = true;
+                // Set View Image Overlay true
+                IoC.Application.ViewImageOverlayVisible = true;
+            }
+            
         }
 
         #endregion

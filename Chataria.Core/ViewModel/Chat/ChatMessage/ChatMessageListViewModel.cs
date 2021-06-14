@@ -165,12 +165,14 @@ namespace Chataria.Core
             if (Items == null)
                 Items = new ObservableCollection<ChatMessageListItemViewModel>();
 
-            // Check that message text isn't string.empty
-            if (PendingMessageText == null)
-                return;
+            string newMessage = "";
 
-            // Get string without white spaces at the end and beginning
-            string newMessage = PendingMessageText.Trim();
+            // Check that message text isn't string.empty
+            if (PendingMessageText != null)
+                // Get string without white spaces at the end and beginning
+                newMessage = PendingMessageText.Trim();
+
+
 
             // Check that message isn't empty
             if (newMessage.Length > 0 || LocalImagePath != null)

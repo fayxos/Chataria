@@ -58,7 +58,12 @@ namespace Chataria.Core
         /// <summary>
         /// The local file path on this machine to the downlaoded thumbail
         /// </summary>
-        public string LocalFilePath { get; set; } 
+        public string LocalFilePath { get; set; }
+
+        /// <summary>
+        /// Indicates if an image has loaded
+        /// </summary>
+        public bool ImageLoaded => LocalFilePath == null;
 
         #endregion
     }

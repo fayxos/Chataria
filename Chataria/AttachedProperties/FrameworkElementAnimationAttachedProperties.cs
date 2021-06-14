@@ -131,6 +131,34 @@ namespace Chataria
     }
 
     /// <summary>
+    /// Fades in an image once the source changes
+    /// </summary>
+    public class FadeInBorderOnLoadProperty : AnimateBaseProperty<FadeInBorderOnLoadProperty>
+    {
+        public override void OnValueUpdated(DependencyObject sender, object value)
+        {
+            // Make sure we have an image
+            if (!(sender is Border border))
+                return;
+
+            // If we want to animate in...
+            if ((bool)value)
+                // Listen for target change
+                border.TargetUpdated += Border_TargetUpdatedAsync;
+            // Otherwise
+            else
+                // Make sure we unhooked
+                border.TargetUpdated -= Border_TargetUpdatedAsync;
+        }
+
+        private async void Border_TargetUpdatedAsync(object sender, System.Windows.Data.DataTransferEventArgs e)
+        {
+            // Fade in image
+            await (sender as Border).FadeInAsync(false);
+        }
+    }
+
+    /// <summary>
     /// Animates a framework element sliding it in from the left on show
     /// and sliding out to the left on hide
     /// </summary>

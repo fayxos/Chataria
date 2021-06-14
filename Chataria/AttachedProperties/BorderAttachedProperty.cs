@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using System.IO;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -39,10 +40,10 @@ namespace Chataria
             }
 
             // Setup loaded event
-            mBorder_Loaded = (s1, e1) => Border_OnChange(s1, e1, self);
+            mBorder_Loaded = (s1, e1) => Border_OnChangeTest(s1, e1, self);
 
             // Setup size changed event
-            mBorder_SizeChanged = (s2, e2) => Border_OnChange(s2, e2, self);
+            mBorder_SizeChanged = (s2, e2) => Border_OnChangeTest(s2, e2, self);
 
             // If true, hook into events
             if ((bool)e.NewValue)
@@ -84,6 +85,11 @@ namespace Chataria
 
             // Assign clipping area to the child
             child.Clip = rect;
+        }
+
+        private void Border_OnChangeTest(object sender, RoutedEventArgs e, FrameworkElement child)
+        {
+          
         }
     }
 }

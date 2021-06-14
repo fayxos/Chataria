@@ -19,6 +19,8 @@
     <None Remove="Images\WindowControls\minimize.png" />
     <None Remove="info.png" />
     <None Remove="logo-color.png" />
+    <None Remove="Storage\Images\image0.jpg" />
+    <None Remove="Storage\Images\katze.jpg" />
   </ItemGroup>
 
   <ItemGroup>
@@ -56,6 +58,8 @@
     <Resource Include="Images\WindowControls\minimize.png" />
     <Resource Include="info.png" />
     <Resource Include="logo-color.png" />
+    <Resource Include="Storage\Images\image0.jpg" />
+    <Resource Include="Storage\Images\katze.jpg" />
   </ItemGroup>
 
   <ItemGroup>
@@ -81,10 +85,6 @@
     <Page Update="Styles\Scroll.xaml">
       <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
     </Page>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Storage\Images\" />
   </ItemGroup>
 
 </Project>
