@@ -63,7 +63,7 @@ namespace Chataria.Core
         /// <summary>
         /// Indicates if an image has loaded
         /// </summary>
-        public bool ImageLoaded => LocalFilePath == null;
+        public bool ImageLoaded => LocalFilePath != null;
 
         #endregion
     }

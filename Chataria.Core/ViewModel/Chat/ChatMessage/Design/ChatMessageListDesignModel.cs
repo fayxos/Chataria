@@ -25,6 +25,8 @@ namespace Chataria.Core
         /// </summary>
         public ChatMessageListDesignModel()
         {
+            DisplayTitle = "Test";
+
             Items = new ObservableCollection<ChatMessageListItemViewModel>
             {
                 new ChatMessageListItemViewModel

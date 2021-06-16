@@ -168,7 +168,7 @@
                             Text="{TemplateBinding Tag}"
                             x:Name="placeHolder"
                             FontFamily="{StaticResource LatoThin}"
-                            Padding="{TemplateBinding Padding}"
+                            Padding="12 10 10 10"
                             VerticalAlignment="Center"
                             HorizontalAlignment="{TemplateBinding HorizontalAlignment}"
                             Foreground="{StaticResource ForegroundLightBrush}"

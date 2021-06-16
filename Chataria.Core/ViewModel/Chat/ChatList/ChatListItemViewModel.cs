@@ -81,6 +81,8 @@ namespace Chataria.Core
 
             IoC.Application.ChangeMainContent(MainContent.Person, new ChatMessageListViewModel
             {
+                DisplayTitle = Name,
+
                 // Comes from the server later
                 Items = new ObservableCollection<ChatMessageListItemViewModel>
                 {

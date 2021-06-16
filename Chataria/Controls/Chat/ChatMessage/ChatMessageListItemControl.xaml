@@ -59,116 +59,94 @@
                     Grid.Column="1"
                     Background="{Binding SentByMe, Converter={local:SentByMeToBackgroundConverter}}" Grid.RowSpan="4"
                 >
-                <Button Style="{StaticResource NoStyleButton}"
-                        Command="{Binding ShowImageCommand}"
+
+                <Grid>
+
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <!-- TODO: Fix Images -->
+                    <!-- Old Image Attachment -->
+                    <Button Style="{StaticResource NoStyleButton}"
+                            Command="{Binding ShowImageCommand}"
+                                >
+                        <Grid
+                            Visibility="{Binding HasImageAttachment, Converter={local:BooleanToVisibilityConverter}, ConverterParameter=True}"
+                            MaxHeight="500"
+                            MaxWidth="500">
+                            <Border CornerRadius="{Binding HasMessage, Converter={local:BooleanToCornerRadiusConverter}}" 
+                                    x:Name="Mask"
+                                    Background="{Binding SentByMe, Converter={local:SentByMeToBackgroundConverter}}"
+                                                />
+                            <Grid >
+                                <Grid.OpacityMask>
+                                    <VisualBrush Visual="{Binding ElementName=Mask}" />
+                                </Grid.OpacityMask>
+
+                                <Image
+                                    DataContext="{Binding ImageAttachment}"
+                                    Source="{Binding LocalFilePath, NotifyOnTargetUpdated=True}"/>
+                            </Grid>
+                        </Grid>
+                    </Button>
+
+                    <!-- Image Loading Circle -->
+                    <Grid HorizontalAlignment="{Binding SentByMe, Converter={local:SentByMeToAlignmentConverter}}"
+                            VerticalAlignment="Top"
+                            Visibility="{Binding ImageAttachment.ImageLoaded, Converter={local:BooleanToVisibilityConverter}, FallbackValue=Collapsed}"
                             >
-                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
 
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto"/>
                             <RowDefinition Height="Auto"/>
                         </Grid.RowDefinitions>
 
-                        <!-- Image Loading Circle -->
-                        <Grid HorizontalAlignment="{Binding SentByMe, Converter={local:SentByMeToAlignmentConverter}}"
-                              VerticalAlignment="Top"
-                              Visibility="{Binding ImageAttachment.ImageLoaded, Converter={local:BooleanToVisibilityConverter}, ConverterParameter=True, FallbackValue=Collapsed}"
-                              >
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto"/>
-                                <ColumnDefinition Width="Auto"/>
-                            </Grid.ColumnDefinitions>
-
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="Auto"/>
-                            </Grid.RowDefinitions>
-
-                            <TextBlock Style="{StaticResource SpinningText}"
-                                   Foreground="{StaticResource BackgroundLightBrush}"
-                                   FontSize="30"
-                                   Margin="10 10 10 0"
-                                   Grid.Column="{Binding SentByMe, Converter={local:SentByMeToColumnConverter}}"
-                                   />
-                            <TextBlock Foreground="{StaticResource BackgroundLightBrush}"
-                                       Text="Loading Image"
-                                       FontSize="20"
-                                       Margin="10 15 10 0"
-                                       FontWeight="Bold"
-                                       Grid.Column="{Binding SentByMe, Converter={local:SentByMeToColumnConverter}, ConverterParameter=True}"
-                                   />
-                            <!-- Margin for Loading Circle at images without text-->
-                            <Border 
-                                Grid.Row="1"
-                                Margin="0 0 0 10"
-                                Visibility="{Binding HasMessage, Converter={local:BooleanToVisibilityConverter}}"
+                        <TextBlock Style="{StaticResource SpinningText}"
+                                Foreground="{StaticResource BackgroundLightBrush}"
+                                FontSize="30"
+                                Margin="10 10 10 0"
+                                Grid.Column="{Binding SentByMe, Converter={local:SentByMeToColumnConverter}}"
                                 />
-                        </Grid>
-
-                        <!-- Image Attachment -->
-                        
+                        <TextBlock Foreground="{StaticResource BackgroundLightBrush}"
+                                    Text="Loading Image"
+                                    FontSize="20"
+                                    Margin="10 15 10 0"
+                                    FontWeight="Bold"
+                                    Grid.Column="{Binding SentByMe, Converter={local:SentByMeToColumnConverter}, ConverterParameter=True}"
+                                />
+                        <!-- Margin for Loading Circle at images without text-->
                         <Border 
-                                Visibility="{Binding HasImageAttachment, Converter={local:BooleanToVisibilityConverter}, ConverterParameter=True}"
-                                CornerRadius="{Binding HasMessage, Converter={local:BooleanToCornerRadiusConverter}}">
-                            <Image local:ClipFromBorderProperty.Value="True"
-                                   DataContext="{Binding ImageAttachment}"
-                                   Source="{Binding LocalFilePath, NotifyOnTargetUpdated=True}"
-                                   local:FadeInImageOnLoadProperty.Value="True"
-                                   MaxHeight="500"
-                                   MaxWidth="500"
-                                />
-                        </Border>
-                        
-                         
-                        
-                        
-                        <!-- TODO: Fix Images -->
-                        <!-- Old Image Attachment -->
-                        <!--
-                        <Button Visibility="{Binding HasImageAttachment, Converter={local:BooleanToVisibilityConverter}, ConverterParameter=True}"
-                            Style="{StaticResource NoStyleButton}"
-                            Command="{Binding ShowImageCommand}"
-                            local:FadeInBorderOnLoadProperty.Value="True"
-                            >
-                            <Grid
-                                MaxHeight="500"
-                                MaxWidth="500">
-                                <Border CornerRadius="{Binding HasMessage, Converter={local:BooleanToCornerRadiusConverter}}" 
-                                        x:Name="Mask"
-                                         />
-                                <Grid>
-                                    <Grid.OpacityMask>
-                                        <VisualBrush Visual="{Binding ElementName=Mask}" />
-                                    </Grid.OpacityMask>
-
-                                    <Image
-                                        DataContext="{Binding ImageAttachment}"
-                                        Source="{Binding LocalFilePath, NotifyOnTargetUpdated=True}"/>
-                                </Grid>
-                            </Grid>
-                        </Button>
-                        -->
-
-                        <!--
-                        TODO:
-                        Video Attachment
-                        Document Attachment
-                        Voice Attachment
-                        -->
-
-                        <!-- Message text -->
-                        <TextBlock Visibility="{Binding HasMessage, Converter={local:BooleanToVisibilityConverter}, ConverterParameter=True}"
-                                    Margin="13"
-                                    Grid.Row="1"
-                                    VerticalAlignment="Center"   
-                                    TextWrapping="Wrap"
-                                    FontSize="18"
-                                    FontFamily="{StaticResource LatoBold}"
-                                    Foreground="{StaticResource BackgroundLightBrush}"
-                                    Text="{Binding Message}"
-                                    />
+                            Grid.Row="1"
+                            Margin="0 0 0 10"
+                            Visibility="{Binding HasMessage, Converter={local:BooleanToVisibilityConverter}}"
+                            />
                     </Grid>
-                </Button>
+
+                    <!--
+                    TODO:
+                    Video Attachment
+                    Document Attachment
+                    Voice Attachment
+                    -->
+
+                    <!-- Message text -->
+                    <TextBlock Visibility="{Binding HasMessage, Converter={local:BooleanToVisibilityConverter}, ConverterParameter=True}"
+                                Margin="13"
+                                Grid.Row="1"
+                                VerticalAlignment="Center"   
+                                TextWrapping="Wrap"
+                                FontSize="18"
+                                FontFamily="{StaticResource LatoBold}"
+                                Foreground="{StaticResource BackgroundLightBrush}"
+                                Text="{Binding Message}"
+                                />
+                </Grid>
             </Border>
 
     <!-- Chat bubble anchor
