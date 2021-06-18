@@ -1,4 +1,5 @@
 ﻿using Chataria.Core;
+using Chataria.Core.Logging;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -26,6 +27,9 @@ namespace Chataria
             // Setup the main application
             ApplicationSetup();
 
+            // Log it
+            IoC.Logger.Log("Application starting up...", LogLevel.Success);
+
             // Show the main window
             Current.MainWindow = new MainWindow();
             Current.MainWindow.Show();
@@ -41,6 +45,9 @@ namespace Chataria
 
             // Bind a UI Manager
             IoC.Kernel.Bind<IUIManager>().ToConstant(new UIManager());
+
+            // Bind a logger
+            IoC.Kernel.Bind<ILogFactory>().ToConstant(new BaseLogFactory());
         }
     }
 }
