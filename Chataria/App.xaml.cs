@@ -28,7 +28,7 @@ namespace Chataria
             ApplicationSetup();
 
             // Log it
-            IoC.Logger.Log("Application starting up...", LogLevel.Success);
+            IoC.Logger.Log("Application starting up...", LogLevel.Debug);
 
             // Show the main window
             Current.MainWindow = new MainWindow();
@@ -43,11 +43,21 @@ namespace Chataria
             // Setup IoC
             IoC.Setup();
 
+            // Bind a logger
+            IoC.Kernel.Bind<ILogFactory>().ToConstant(new BaseLogFactory(new[] 
+            { 
+                // TODO: Add ApplicationSettings so we can set/edit a log location
+                // For now just log to the path where this application is running
+                new FileLogger("log.txt"),
+            }));
+
+            // Bind a file manager
+            IoC.Kernel.Bind<IFileManager>().ToConstant(new FileManager());
+
             // Bind a UI Manager
             IoC.Kernel.Bind<IUIManager>().ToConstant(new UIManager());
 
-            // Bind a logger
-            IoC.Kernel.Bind<ILogFactory>().ToConstant(new BaseLogFactory());
+            
         }
     }
 }

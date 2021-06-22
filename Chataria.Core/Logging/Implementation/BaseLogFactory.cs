@@ -48,10 +48,16 @@ namespace Chataria.Core.Logging
         /// <summary>
         /// Default constructor
         /// </summary>
-        public BaseLogFactory()
+        /// <param name="loggers">The loggers to add to the factory, on top of the stock loggers already included</param>
+        public BaseLogFactory(ILogger[] loggers = null)
         {
             // Add the console logger by default
             AddLogger(new DebugLogger());
+
+            // Add any others passed in
+            if (loggers != null)
+                foreach (var logger in loggers)
+                    AddLogger(logger);
         }
 
         #endregion
@@ -95,7 +101,7 @@ namespace Chataria.Core.Logging
 
             // If the user wants to know where the log originated from...
             if (IncludeLogOriginDetails)
-                message = $"[{Path.GetFileName(filePath)} > {origin}() > Line {lineNumber}]\r\n{message}";
+                message = $"{message} [{Path.GetFileName(filePath)} > {origin}() > Line {lineNumber}]";
 
             // Log to all loggers
             mLoggers.ForEach(logger => logger.Log(message, level));
