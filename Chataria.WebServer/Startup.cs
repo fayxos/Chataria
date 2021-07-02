@@ -29,7 +29,26 @@ namespace Chataria.WebServer
             // NOTE: Automatically ads the validated user from a cookie to the HttpContext.User
             services.AddIdentity<ApplicationUser, IdentityRole>()
                 // Adds UserStore and RoleStore from this context
-                .AddEntityFrameworkStores<ApplicationDbContext>();
+                // That are consumed by the UserManager and Role Manager
+                .AddEntityFrameworkStores<ApplicationDbContext>()
+
+                // Adds a provider that generates unique keys and hashes for things like
+                // forgot password links, phone number verification codes, etc...
+                .AddDefaultTokenProviders();
+
+            // Change password policy
+            services.Configure<IdentityOptions>(options =>
+            {
+                // Make really weak passwords possible for now
+                options.Password.RequireDigit = false;
+                options.Password.RequiredLength = 5;
+                options.Password.RequireLowercase = true;
+                options.Password.RequireUppercase = false;
+                options.Password.RequireNonAlphanumeric = false;
+            });
+
+            // TODO: Change Login URL
+            // TODO: Change cookie timeout
 
             services.AddMvc();
         }
@@ -39,6 +58,9 @@ namespace Chataria.WebServer
         {
             // Store instance of the DI service provider so our application can access it anywhere
             IoCContainer.Provider = (ServiceProvider)serviceProvider;
+
+            // Setup Identity
+            app.UseAuthentication();
 
             if (env.IsDevelopment())
                 app.UseDeveloperExceptionPage();

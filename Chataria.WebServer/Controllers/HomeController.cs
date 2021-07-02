@@ -1,5 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Chataria.WebServer.Controllers
 {
@@ -12,6 +14,16 @@ namespace Chataria.WebServer.Controllers
         /// </summary>
         protected ApplicationDbContext mContext;
 
+        /// <summary>
+        /// The manager for handling users creation, deletion, searching, roles etc...
+        /// </summary>
+        protected UserManager<ApplicationUser> mUserManager;
+
+        /// <summary>
+        /// The manager for handling signing in and out for our users
+        /// </summary>
+        protected SignInManager<ApplicationUser> mSignInManager;
+
         #endregion
 
         #region Constructor
@@ -20,9 +32,14 @@ namespace Chataria.WebServer.Controllers
         /// Default constructor
         /// </summary>
         /// <param name="context">The injected context</param>
-        public HomeController(ApplicationDbContext context)
+        public HomeController(
+            ApplicationDbContext context,
+            UserManager<ApplicationUser> userManager,
+            SignInManager<ApplicationUser> signInManager)
         {
             mContext = context;
+            mUserManager = userManager;
+            mSignInManager = signInManager;
         }
 
         #endregion
@@ -59,6 +76,21 @@ namespace Chataria.WebServer.Controllers
             }
 
             return View();
+        }
+
+        [Route("create")]
+        public async Task<IActionResult> CreateUserAsync()
+        {
+            var result = await mUserManager.CreateAsync(new ApplicationUser
+            {
+                UserName = "fayxos",
+                Email = "felixhaag@hotmail.de"
+            }, "password");
+
+            if (result.Succeeded)
+                return Content("User was created", "text/html");
+
+            return Content("User creation failed", "text/html");
         }
     }
 }
