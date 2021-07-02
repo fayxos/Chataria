@@ -47,8 +47,18 @@ namespace Chataria.WebServer
                 options.Password.RequireNonAlphanumeric = false;
             });
 
-            // TODO: Change Login URL
-            // TODO: Change cookie timeout
+            // Alter application cookie Info
+            services.ConfigureApplicationCookie(options =>
+            {
+                // Redirect to /login
+                options.LoginPath = "/login";
+
+                // Change cookie timeout to expire in 15 seconds
+                options.ExpireTimeSpan = TimeSpan.FromSeconds(15);
+            });
+
+            
+
 
             services.AddMvc();
         }
