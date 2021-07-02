@@ -8,6 +8,9 @@ using System.Threading.Tasks;
 namespace Chataria.WebServer.Controllers
 {
     // [Authorize]
+    /// <summary>
+    /// Manages the standard web server pages
+    /// </summary>
     public class HomeController : Controller
     {
         #region Protected Members

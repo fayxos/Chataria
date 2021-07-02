@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 
 namespace Chataria.WebServer
@@ -23,5 +24,11 @@ namespace Chataria.WebServer
         /// The service provider for this application
         /// </summary>
         public static ServiceProvider Provider { get; set; }
+
+        /// <summary>
+        /// the configuration manager for the application
+        /// </summary>
+        public static IConfiguration Configuration { get; set; }
+
     }
 }

@@ -4,7 +4,9 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.IdentityModel.Tokens;
 using System;
+using System.Text;
 
 namespace Chataria.WebServer
 {
@@ -12,22 +14,21 @@ namespace Chataria.WebServer
     {
         public Startup(IConfiguration configuration)
         {
-            Configuration = configuration;
+            IoCContainer.Configuration = configuration;
         }
-
-        public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             // Add ApplicationDbContext to DI
             services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+                options.UseSqlServer(IoCContainer.Configuration.GetConnectionString("DefaultConnection")));
 
             // AddIdentity adds cookie based authentication
             // Adds scoped classes for things like UserManager, SignInManager, PasswordHashers etc...
             // NOTE: Automatically ads the validated user from a cookie to the HttpContext.User
             services.AddIdentity<ApplicationUser, IdentityRole>()
+
                 // Adds UserStore and RoleStore from this context
                 // That are consumed by the UserManager and Role Manager
                 .AddEntityFrameworkStores<ApplicationDbContext>()
@@ -35,6 +36,22 @@ namespace Chataria.WebServer
                 // Adds a provider that generates unique keys and hashes for things like
                 // forgot password links, phone number verification codes, etc...
                 .AddDefaultTokenProviders();
+
+            // Add JWT Authentication for API clients
+            services.AddAuthentication()
+                .AddJwtBearer(options =>
+                {
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuer = true,
+                        ValidateAudience = true,
+                        ValidateLifetime = true,
+                        ValidateIssuerSigningKey = true,
+                        ValidIssuer = IoCContainer.Configuration["Jwt:Issuer"],
+                        ValidAudience = IoCContainer.Configuration["Jwt:Audience"],
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(IoCContainer.Configuration["Jwt:SecretKey"])),
+                    };
+                });
 
             // Change password policy
             services.Configure<IdentityOptions>(options =>
@@ -54,11 +71,8 @@ namespace Chataria.WebServer
                 options.LoginPath = "/login";
 
                 // Change cookie timeout to expire in 15 seconds
-                options.ExpireTimeSpan = TimeSpan.FromSeconds(15);
+                options.ExpireTimeSpan = TimeSpan.FromSeconds(1500);
             });
-
-            
-
 
             services.AddMvc();
         }
