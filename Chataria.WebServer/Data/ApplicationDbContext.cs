@@ -7,7 +7,7 @@ namespace Chataria.WebServer
     /// <summary>
     /// The database representational model for our application
     /// </summary>
-    public class ApplicationDbContext : IdentityDbContext<>
+    public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         #region Public Properties
 

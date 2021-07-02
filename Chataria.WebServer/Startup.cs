@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -22,6 +23,13 @@ namespace Chataria.WebServer
             // Add ApplicationDbContext to DI
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+
+            // AddIdentity adds cookie based authentication
+            // Adds scoped classes for things like UserManager, SignInManager, PasswordHashers etc...
+            // NOTE: Automatically ads the validated user from a cookie to the HttpContext.User
+            services.AddIdentity<ApplicationUser, IdentityRole>()
+                // Adds UserStore and RoleStore from this context
+                .AddEntityFrameworkStores<ApplicationDbContext>();
 
             services.AddMvc();
         }

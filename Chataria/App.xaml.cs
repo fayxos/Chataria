@@ -30,11 +30,6 @@ namespace Chataria
             // Log it
             IoC.Logger.Log("Application starting up...", LogLevel.Debug);
 
-            IoC.Task.Run(() =>
-            {
-                throw new ArgumentNullException("ooops");
-            });
-
             // Show the main window
             Current.MainWindow = new MainWindow();
             Current.MainWindow.Show();
