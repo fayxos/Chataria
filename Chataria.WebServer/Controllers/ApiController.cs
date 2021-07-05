@@ -29,7 +29,25 @@ namespace Chataria.WebServer.Controllers
                 new Claim("my key", "my value")
             };
 
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(IoCContainer.Configuration["Jwt:SecretKey"]));
+            // Create the credentials used to generate the token
+            var credentials = new SigningCredentials(
+                new SymmetricSecurityKey(Encoding.UTF8.GetBytes(IoCContainer.Configuration["Jwt:SecretKey"])),
+                SecurityAlgorithms.HmacSha256);
+
+            // Generate the Jwt Token
+            var token = new JwtSecurityToken(
+                issuer: IoCContainer.Configuration["Jwt:Issuer"],
+                audience: IoCContainer.Configuration["Jwt:Audience"],
+                claims: claims,
+                expires: DateTime.Now.AddMonths(3),
+                signingCredentials: credentials
+                );
+
+            // Return token to user
+            return Ok(new
+            {
+                token = new JwtSecurityTokenHandler().WriteToken(token)
+            });
         }
     }
 }

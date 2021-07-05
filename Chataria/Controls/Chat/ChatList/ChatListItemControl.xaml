@@ -14,7 +14,9 @@
                     <ControlTemplate TargetType="{x:Type ContentControl}">
 
                         <!-- Content -->
-                        <Border x:Name="background" Background="{StaticResource BackgroundLightBrush}">
+                        <Border x:Name="background" 
+                                Background="{StaticResource BackgroundLightBrush}"
+                                CornerRadius="10">
 
                             <!-- Click to open message -->
                             <Border.InputBindings>
@@ -22,72 +24,76 @@
                             </Border.InputBindings>
                         
                             <!-- Main Content -->
-                            <Grid x:Name="container" Background="Transparent">
-                                <Grid.ColumnDefinitions>
-                                    <!-- Profil Picture -->
-                                    <ColumnDefinition Width="Auto"/>
-                                    <!-- Main Content -->
-                                    <ColumnDefinition Width="*"/>
+                            <Border x:Name ="container" 
+                                    Background="Transparent"
+                                    CornerRadius="10">
+                                <Grid 
+                                  >
+                                    <Grid.ColumnDefinitions>
+                                        <!-- Profil Picture -->
+                                        <ColumnDefinition Width="Auto"/>
+                                        <!-- Main Content -->
+                                        <ColumnDefinition Width="*"/>
+                                        <!-- New Message Indicator Bar -->
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+
                                     <!-- New Message Indicator Bar -->
-                                    <ColumnDefinition Width="Auto"/>
-                                </Grid.ColumnDefinitions>
+                                    <!-- <Border Background="red" Width="5"/> -->
 
-                                <!-- New Message Indicator Bar -->
-                                <!-- <Border Background="red" Width="5"/> -->
-
-                                <!-- Profil Picture padding -->
-                                <Border Grid.Column="0" 
+                                    <!-- Profil Picture padding -->
+                                    <Border Grid.Column="0" 
                                         Padding="8 15"
                                         >
-                                    <!-- Profil Picture background -->
-                                    <Border 
+                                        <!-- Profil Picture background -->
+                                        <Border 
                                         Background="{Binding ProfilePictureRGB, Converter={local:StringRGBToBrushConverter}}" 
                                         Height="50"
                                         Width="{Binding ActualHeight, RelativeSource={RelativeSource Self}}"
                                         CornerRadius="{Binding ActualHeight, RelativeSource={RelativeSource Self}}">
-                                        <!-- Profil Picture initials -->
-                                        <TextBlock Text="{Binding Initials}"
+                                            <!-- Profil Picture initials -->
+                                            <TextBlock Text="{Binding Initials}"
                                            VerticalAlignment="Center"
                                            HorizontalAlignment="Center"
                                            Foreground="{StaticResource ForegroundVeryLightBrush}"
                                            FontSize="{StaticResource FontSizeXXLarge}"
                                            FontFamily="{StaticResource LatoRegular}"
-                                           />       
+                                           />
+                                        </Border>
                                     </Border>
-                                </Border>
 
-                                <!-- Main Content -->
-                                <Border Padding="0 0 8 0" Grid.Column="1" >
-                                    <Grid>
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition Height="*"/>
-                                            <RowDefinition Height="1"/>
-                                        </Grid.RowDefinitions>
-                                        <StackPanel VerticalAlignment="Center">
-                                            <!-- Name -->
-                                            <TextBlock Text="{Binding Name}" 
+                                    <!-- Main Content -->
+                                    <Border Padding="0 0 8 0" Grid.Column="1" >
+                                        <Grid>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="*"/>
+                                                <RowDefinition Height="1"/>
+                                            </Grid.RowDefinitions>
+                                            <StackPanel VerticalAlignment="Center">
+                                                <!-- Name -->
+                                                <TextBlock Text="{Binding Name}" 
                                                        Padding="0 0 0 1"
                                                        Foreground="{StaticResource MainBlueBrush}"
                                                        FontFamily="{StaticResource LatoRegular}"
                                                        FontSize="{StaticResource FontSizeLarge}"
-                                                       />   
-                                            <!-- Last Message -->
-                                            <TextBlock Text="{Binding Message}" 
+                                                       />
+                                                <!-- Last Message -->
+                                                <TextBlock Text="{Binding Message}" 
                                                        Padding="0 1 0 0"
                                                        Foreground="{StaticResource ForegroundLightBrush}"
                                                        TextTrimming="CharacterEllipsis"
                                                        FontFamily="{StaticResource LatoRegular}"
                                                        FontSize="18"
                                                        />
-                                        </StackPanel>
+                                            </StackPanel>
 
-                                        <!-- <Rectangle Grid.Row="1" Fill="{StaticResource MainBlueBrush}" Width="170" HorizontalAlignment="Left"/> -->
-                                    </Grid>
+                                            <!-- <Rectangle Grid.Row="1" Fill="{StaticResource MainBlueBrush}" Width="170" HorizontalAlignment="Left"/> -->
+                                        </Grid>
 
-                                </Border>
+                                    </Border>
 
-                                <!-- New Message Indicator Circle -->
-                                <Border 
+                                    <!-- New Message Indicator Circle -->
+                                    <Border 
                                     Background="LightGreen" 
                                     Grid.Column="2" 
                                     Height="20" 
@@ -97,13 +103,18 @@
                                     Visibility="{Binding NewContentAvailable, Converter={local:BooleanToVisibilityConverter}, ConverterParameter=True}"
                                     />
 
-                            </Grid>
+                                </Grid>
+                            </Border>
 
                         </Border>
 
                         <!-- Hover effect -->
                         <ControlTemplate.Triggers>
 
+                            <DataTrigger Binding="{Binding IsSelected}" Value="True">
+                                <Setter Property="Background" TargetName="background" Value="{StaticResource HoverGreyBrush}"/>
+                            </DataTrigger>
+                            
                             <EventTrigger RoutedEvent="MouseEnter">
                                 <BeginStoryboard>
                                     <Storyboard>
@@ -122,10 +133,6 @@
                                 <Setter Property="Background" TargetName="container" Value="{StaticResource HoverGreyBrush}"/>
                             </Trigger>
 
-                            <DataTrigger Binding="{Binding IsSelected}" Value="True">
-                                <Setter Property="Background" TargetName="background" Value="{StaticResource HoverGreyBrush}"/>
-                            </DataTrigger>
-                            
                         </ControlTemplate.Triggers>
 
                     </ControlTemplate>

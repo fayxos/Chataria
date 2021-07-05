@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -109,7 +110,7 @@ namespace Chataria.WebServer.Controllers
         /// Private area. No peeking
         /// </summary>
         /// <returns></returns>
-        [Authorize]
+        [Authorize(AuthenticationSchemes = "Identity.Application,Bearer")]
         [Route("private")]
         public IActionResult Private()
         {

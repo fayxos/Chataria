@@ -18,7 +18,7 @@
             <!-- Settings Title-->
             <Grid Height="40" Margin="0 0 0 20">
 
-                <!-- Back button -->
+                <!-- Back button 
                 <Button Style="{StaticResource IconGrowButton}"
                     Content="{StaticResource FontAwesomeArrowLeftIcon}"
                     FontFamily="{StaticResource FontAwesome}"
@@ -28,6 +28,7 @@
                     VerticalAlignment="Center"
                     Command="{Binding CloseEditProfileMenuCommand}"
                     />
+                -->
 
                 <TextBlock FontSize="{StaticResource FontSizeLarge}"
                        HorizontalAlignment="Center"
