@@ -13,18 +13,15 @@
 
 
         <!-- Main Content -->
-            <Grid >
+    <Border Margin="15 7.5 15 15"
+            Background="{StaticResource BackgroundDarkBrush}"
+            CornerRadius="10">
                 <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
                     <StackPanel
-                        VerticalAlignment="Center"
-                        HorizontalAlignment="Center"
+                        VerticalAlignment="Top"
                         TextBlock.TextAlignment="Center">
 
-                        <Border Background="{StaticResource BackgroundDarkBrush}"
-                                CornerRadius="10"
-                                Padding="15 50 15 15"
-                                Width="330"
-                                Margin="50 50 50 0">
+                        <Border Padding="15 50 15 15">
                             <StackPanel>
                                 <TextBlock Text="Sign Up" 
                                         FontSize="40" 
@@ -34,8 +31,8 @@
                                             FontSize="17"
                                             Margin="0 0 0 20"
                                             Foreground="{StaticResource LightGreyBrush}"/>
-                                <TextBox Text="{Binding Email}" local:IsFocusedProperty.Value="True"  Style="{StaticResource TextBoxPlaceholder}" Tag="Email"/>
-                                <PasswordBox x:Name="PasswordText" Style="{StaticResource PasswordBoxPlaceholder}" Tag="Password"/>
+                        <TextBox Text="{Binding Email}" local:IsFocusedProperty.Value="True"  Style="{StaticResource TextBoxPlaceholder}" Tag="Email"  Width="400"/>
+                        <PasswordBox x:Name="PasswordText" Style="{StaticResource PasswordBoxPlaceholder}" Tag="Password"  Width="400"/>
 
                                 <Button 
                                     x:Name="SubmitButton" 
@@ -57,6 +54,6 @@
                                 HorizontalAlignment="Center"/>
                     </StackPanel>
                 </ScrollViewer>
-            </Grid>
+            </Border>
 
 </local:BasePage>

@@ -13,7 +13,7 @@ namespace Chataria.Core
         /// <summary>
         /// The current Page of the application
         /// </summary>
-        public ApplicationPage CurrentPage { get; private set; } = ApplicationPage.Main;
+        public ApplicationPage CurrentPage { get; private set; } = ApplicationPage.Login;
 
         /// <summary>
         /// The view model to use for the current page when the current page changes

@@ -14,7 +14,7 @@
                 VerticalAlignment="Center" 
                 HorizontalAlignment="Left"
                 Background="Transparent"
-                Margin="15 5 0 0"
+                Margin="15 0 0 0"
                 >
         <Button Style="{StaticResource AttachmentButton}"
                 Content="{StaticResource FontAwesomePictureIcon}"

@@ -92,7 +92,7 @@
                 </Border>
 
 
-                <!-- Attachment Menu Popup 
+                <!-- Attachment Menu Pop-up 
                 <local:BubbleContent DataContext="{Binding AttachmentMenu}" 
                                         Grid.Row="1"
                                         VerticalAlignment="Bottom"
@@ -100,76 +100,74 @@
                                         local:AnimateSlideInFromBottomProperty.Value="{Binding ViewModel.AttachmentMenuVisible, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:PersonPage}}}"/>
                 -->
 
-                <!-- Attachment Menu Popup -->
+
+                <!-- Attachment Menu Pop-up -->
                 <local:AttachmentPopup
-                Visibility="Collapsed"
-                VerticalAlignment="Bottom"
-                x:Name="PopUp"
-                Grid.Row="1"
-                local:AnimateSlideInFromBottomProperty.Value="{Binding AttachmentMenuVisible}"/>
+                        Visibility="Collapsed"
+                        x:Name="PopUp"
+                        VerticalAlignment="Bottom"
+                        local:AnimateSlideInFromBottomProperty.Value="{Binding AttachmentMenuVisible}"/>
 
-
-                <Border Grid.Row="1">
-                    <!-- Message Send Text Bar -->
-                    <Border  
+                <!-- Message Send Text Bar -->
+                <Border  
+                    Grid.Row="1"
                     Margin="15 10 15 20" 
                     CornerRadius="15" 
                     Background="{StaticResource BackgroundLightBrush}"
                     MaxHeight="108"
                     MinHeight="50">
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <!--^Attach button -->
-                                <ColumnDefinition Width="Auto"/>
-                                <!-- Text Enrty box -->
-                                <ColumnDefinition Width="*"/>
-                                <!--Additional buttons-->
-                                <ColumnDefinition Width="Auto"/>
-                            </Grid.ColumnDefinitions>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <!--^Attach button -->
+                            <ColumnDefinition Width="Auto"/>
+                            <!-- Text Entry box -->
+                            <ColumnDefinition Width="*"/>
+                            <!--Additional buttons-->
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
 
-                            <!-- Attach button -->
-                            <Button Style="{StaticResource IconGrowButton}"
-                                Content="{StaticResource FontAwesomePaperclipIcon}"
-                                Foreground="{StaticResource ForegroundLightBrush}"
-                                Height="50"
-                                VerticalAlignment="Bottom"
-                                x:Name="AttachButton"
-                                Command="{Binding AttachmentButtonCommand}"    
+                        <!-- Attach button -->
+                        <Button Style="{StaticResource IconGrowButton}"
+                            Content="{StaticResource FontAwesomePaperclipIcon}"
+                            Foreground="{StaticResource ForegroundLightBrush}"
+                            Height="50"
+                            VerticalAlignment="Bottom"
+                            x:Name="AttachButton"
+                            Command="{Binding AttachmentButtonCommand}"    
+                            />
+
+                        <TextBox Grid.Column="1" 
+                            x:Name="MessageText"
+                            Tag="Write Message..."
+                            Style="{StaticResource SendTextBox}"
+                            VerticalScrollBarVisibility="Auto"
+                            Text="{Binding PendingMessageText, UpdateSourceTrigger=PropertyChanged}"
+                            local:IsFocusedProperty.Value="True"
+                            PreviewKeyDown="MessageText_PreviewKeyDown"
                                 />
 
-                            <TextBox Grid.Column="1" 
-                                x:Name="MessageText"
-                                Tag="Write Message..."
-                                Style="{StaticResource SendTextBox}"
-                                VerticalScrollBarVisibility="Auto"
-                                Text="{Binding PendingMessageText, UpdateSourceTrigger=PropertyChanged}"
-                                local:IsFocusedProperty.Value="True"
-                                PreviewKeyDown="MessageText_PreviewKeyDown"
-                                    />
-
-                            <!-- Additional buttons -->
-                            <StackPanel Grid.Column="2"
-                                    Orientation="Horizontal"
-                                    VerticalAlignment="Bottom"
-                                    >
-                                <!-- Emoji button -->
-                                <Button Style="{StaticResource EmojiButton}"
-                                    x:Name="AA"
-                                    Content="😀"
-                                    Height="50"
-                                    MouseEnter="Button_MouseEnter"
-                                    />
-                                <!-- Send Button -->
-                                <Button Style="{StaticResource IconGrowButton}"
-                                    Foreground="{StaticResource MainBlueBrush}"
-                                    Content="{StaticResource FontAwesomeSend}"
-                                    Focusable="False"
-                                    Height="50"
-                                    Command="{Binding SendCommand}"
-                            />
-                            </StackPanel>
-                        </Grid>
-                    </Border>
+                        <!-- Additional buttons -->
+                        <StackPanel Grid.Column="2"
+                                Orientation="Horizontal"
+                                VerticalAlignment="Bottom"
+                                >
+                            <!-- Emoji button -->
+                            <Button Style="{StaticResource EmojiButton}"
+                                x:Name="AA"
+                                Content="😀"
+                                Height="50"
+                                MouseEnter="Button_MouseEnter"
+                                />
+                            <!-- Send Button -->
+                            <Button Style="{StaticResource IconGrowButton}"
+                                Foreground="{StaticResource MainBlueBrush}"
+                                Content="{StaticResource FontAwesomeSend}"
+                                Focusable="False"
+                                Height="50"
+                                Command="{Binding SendCommand}"
+                        />
+                        </StackPanel>
+                    </Grid>
                 </Border>
             </Grid>
         </Border>
