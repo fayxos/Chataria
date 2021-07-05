@@ -56,7 +56,6 @@ namespace Chataria
 
         #endregion
 
-
         #region Animation Load / Unload
 
         /// <summary>
@@ -125,8 +124,5 @@ namespace Chataria
         }
 
         #endregion
-
-
-
     }
 }

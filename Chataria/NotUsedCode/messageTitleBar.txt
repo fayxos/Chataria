@@ -1,0 +1,92 @@
+﻿<!-- Title Bar -->
+            <Grid Height="60" Background="{StaticResource BackgroundLightBrush}">
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+
+                <!-- Profil Picture padding -->
+                <Border Grid.Column="0" 
+                Padding="10 0 10 0"
+                            >
+                    <!-- Profil Picture background -->
+                    <Border 
+                        Background="{Binding ProfilePictureRGB, Converter={local:StringRGBToBrushConverter}}" 
+                        Height="50"
+                        Width="{Binding ActualHeight, RelativeSource={RelativeSource Self}}"
+                        CornerRadius="{Binding ActualHeight, RelativeSource={RelativeSource Self}}">
+                        <!-- Profil Picture initials -->
+                        <TextBlock Text="{Binding Initials}"
+                                VerticalAlignment="Center"
+                                HorizontalAlignment="Center"
+                                Foreground="{StaticResource ForegroundVeryLightBrush}"
+                                FontSize="{StaticResource FontSizeXXLarge}"
+                                FontFamily="{StaticResource LatoRegular}"
+                                />
+                    </Border>
+                </Border>
+
+
+                <!-- Title Text -->
+                <TextBlock Text="{Binding DisplayTitle}"
+                    Grid.Column="1"
+                    Foreground="{StaticResource ForegroundLightBrush}"
+                    FontSize="{StaticResource FontSizeXLarge}"
+                    HorizontalAlignment="Left"
+                    FontFamily="{StaticResource LatoBold}"
+                    VerticalAlignment="Center"/>
+
+                <!-- MainButtons -->
+                <StackPanel Orientation="Horizontal" Grid.Column="2">
+
+                    <!-- Search Button -->
+                    <Button Style="{StaticResource IconGrowButton}" 
+                        Content="{StaticResource FontAwesomeSearchIcon}" 
+                        Command="{Binding OpenSearchCommand}"
+                        />
+
+                    <Button Style="{StaticResource IconGrowButton}" Content="{StaticResource FontAwesomeEllipsisVerticalIcon}"/>
+                </StackPanel>
+
+                <!-- Search Overlay -->
+                <Grid Grid.ColumnSpan="3"
+                    local:AnimateSlideInFromRightMarginProperty.Value="{Binding SearchIsOpen}"
+                    >
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <!-- Close search Button -->
+                    <Button Style="{StaticResource IconGrowButton}" 
+                        Content="{StaticResource FontAwesomeCloseIcon}" 
+                        Command="{Binding CloseSearchCommand}"
+                        Foreground="{StaticResource MainBlueBrush}"
+                        />
+
+                    <!-- Search Box -->
+                    <TextBox 
+                    VerticalAlignment="Center"
+                    Grid.Column="1" 
+                    Tag="Search Message..."
+                    Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}"
+                    Foreground="White"
+                    FontSize="{StaticResource FontSizeLarge}"
+                    Style="{StaticResource TextBoxPlaceholder}"
+                    Margin="0 0 15 0"
+                    local:FocusAndSelectProperty.Value="{Binding SearchIsOpen}"
+                    >
+                        <TextBox.InputBindings>
+                            <!-- Clear text on excape -->
+                            <KeyBinding Command="{Binding ClearSearchCommand}" Key="Esc"/>
+                            <!-- Search on enter -->
+                            <KeyBinding Command="{Binding SearchCommand}" Key="Return"/>
+                        </TextBox.InputBindings>
+                    </TextBox>
+
+                </Grid>
+
+            </Grid>

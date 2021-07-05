@@ -10,6 +10,7 @@ namespace Chataria.Core
     /// </summary>
     public class ChatListItemViewModel : BaseViewModel
     {
+
         #region Public Properties
 
         /// <summary>
@@ -71,7 +72,7 @@ namespace Chataria.Core
         private void OpenMessage()
         {
             // Unselect other chat
-            foreach (ChatListItemViewModel item in ChatListViewModel.Items)
+            foreach (ChatListItemViewModel item in ChatListDesignModel.Items)
             {
                 item.IsSelected = false;
             }
@@ -79,7 +80,7 @@ namespace Chataria.Core
             // Make the chat selected
             IsSelected = true;
 
-            IoC.Application.ChangeMainContent(MainContent.Person, new ChatMessageListViewModel
+            IoC.Application.GoToPage(ApplicationPage.Main, new ChatMessageListViewModel
             {
                 DisplayTitle = Name,
 

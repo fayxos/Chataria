@@ -1,4 +1,6 @@
 ﻿using Chataria;
+using System;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 
 namespace Chataria.Core
@@ -14,17 +16,12 @@ namespace Chataria.Core
         public ApplicationPage CurrentPage { get; private set; } = ApplicationPage.Main;
 
         /// <summary>
-        /// The current Page of the application
-        /// </summary>
-        public MainContent CurrentMainContent { get; private set; } = MainContent.Person;
-
-        /// <summary>
         /// The view model to use for the current page when the current page changes
         /// NOTE: This is not a live up-to-date view model of the current page
         ///       it is simply used to set the view model of the current page
         ///       at the time it changes
         /// </summary>
-        public BaseViewModel CurrentPageViewModel { get; set; }
+        public BaseViewModel CurrentPageViewModel { get; set; } = new ChatMessageListViewModel();
 
         /// <summary>
         /// True if the side menu should be shown
@@ -59,29 +56,17 @@ namespace Chataria.Core
             // Set the current page
             CurrentPage = page;
 
+            // Change the view model
+            if (viewModel != null)
+                CurrentPageViewModel = viewModel;
 
             // Show side menu or not?
             if (page == ApplicationPage.Login || page == ApplicationPage.Register)
                 SideMenuVisible = false;
             else
                 SideMenuVisible = true;
-        }
 
-        /// <summary>
-        /// Navigates to the specified page
-        /// </summary>
-        /// <param name="page">the page to go to</param>
-        public void ChangeMainContent(MainContent page, BaseViewModel viewModel = null)
-        {
-            if (viewModel != null)
-                // Set the view model
-                CurrentPageViewModel = viewModel; 
-
-            // Change main Content
-            CurrentMainContent = page;
-
-            // Fire off a CurrentMainContent changed event
-            OnPropertyChanged(nameof(CurrentMainContent));
+            OnPropertyChanged(nameof(CurrentPage));
         }
     }
 }

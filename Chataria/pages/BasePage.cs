@@ -145,6 +145,14 @@ namespace Chataria
         }
 
         #endregion
+
+        /// <summary>
+        /// Fired when the view model changes
+        /// </summary>
+        protected virtual void OnViewModelChanged()
+        {
+
+        }
     }
 
     /// <summary>

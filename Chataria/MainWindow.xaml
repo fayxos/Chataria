@@ -16,12 +16,8 @@
         Title="Chataria" 
         Width="900" 
         Height="600"
-        Deactivated="AppWindow_Deactivated"
-        Activated="AppWindow_Activated"
         WindowStyle="None">
     <!-- Width=560 Height=430 -->
-
-    <!-- Chithub test 2 -->
   
     <Window.Resources>
         <FontFamily x:Key="FontAwesome">pack://application:,,,/Fonts/#FontAwesome</FontFamily>
@@ -36,43 +32,92 @@
             />
     </WindowChrome.WindowChrome>
 
-    <!-- (#CF6679 #E8637B) blau:#5eb3ce hellere grau:{StaticResource BackgroundLightBrush} dunklere grau:{StaticResource BackgroundDarkBrush} rosa:#ff537e-->
     <Grid Background="{StaticResource BackgroundLightBrush}">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-
+        
         <!-- Title Bar -->
-        <Grid Grid.Row="0">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="60" />
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
-
-            <Grid Grid.Column="1" Height="45">
+        <Border Grid.Row="0"
+                Margin="15 15 15 7.5"
+                CornerRadius="10"
+                Background="{StaticResource MainBlueBrush}">
+            <Grid>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="50" />
-                    <ColumnDefinition Width="50" />
-                    <ColumnDefinition Width="50" />
+                    <ColumnDefinition Width="350"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
+                
+                <!-- Logo -->
+                <StackPanel Grid.Column="0" Grid.Row="0" Orientation="Horizontal" Margin="0 0 15 0">
+                    <Image RenderOptions.BitmapScalingMode="HighQuality" 
+                           Source="/logo-color.png" 
+                           VerticalAlignment="Center" 
+                           HorizontalAlignment="Center" 
+                           Margin="10 0 0 0"
+                           Width="35"/>
 
-                <Frame Background="{StaticResource BackgroundDarkBrush}" BorderThickness="0,0,0,1" Height="45" Grid.Column="0"/>
-                <TextBlock Grid.Column="0" Text="Chataria" TextAlignment="Left" VerticalAlignment="Center" FontSize="25" FontWeight="Bold" Foreground="#5eb3ce" FontFamily="{StaticResource LatoBold}" />
+                    <TextBlock Text="Chataria"
+                               TextAlignment="Left" 
+                               VerticalAlignment="Center" 
+                               FontSize="25" 
+                               FontWeight="Bold" 
+                               Padding="7.5"
+                               Foreground="{StaticResource BackgroundDarkBrush}" 
+                               FontFamily="{StaticResource LatoBold}" />
+                </StackPanel>
+                
+                <!-- Title Bar Buttons -->
+                <StackPanel Orientation="Horizontal" Grid.Column="1">
+                    <!-- Search message-->
+                    <Grid Height="40">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
 
+                        <!-- Close search Button -->
+                        <Button Style="{StaticResource IconGrowButton}" 
+                            Content="{StaticResource FontAwesomeCloseIcon}" 
+                            Command="{Binding CloseSearchCommand}"
+                            Foreground="{StaticResource MainBlueBrush}"
+                            />
 
-                <Frame Background="{StaticResource BackgroundDarkBrush}" BorderThickness="0,0,0,1" Height="45" Grid.Column="1"/>
+                        <!-- Search Box -->
+                        <TextBox 
+                            VerticalAlignment="Center"
+                            Grid.Column="1" 
+                            Tag="Search Message..."
+                            Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}"
+                            Foreground="White"
+                            FontSize="{StaticResource FontSizeLarge}"
+                            Style="{StaticResource TextBoxPlaceholder}"
+                            Margin="0 0 15 0"
+                            local:FocusAndSelectProperty.Value="{Binding SearchIsOpen}"
+                            >
+                            <TextBox.InputBindings>
+                                <!-- Clear text on escape -->
+                                <KeyBinding Command="{Binding ClearSearchCommand}" Key="Esc"/>
+                                <!-- Search on enter -->
+                                <KeyBinding Command="{Binding SearchCommand}" Key="Return"/>
+                            </TextBox.InputBindings>
+                        </TextBox>
 
+                    </Grid>
+                </StackPanel>
 
-                <Button Name="minimizeButton" Command="{Binding MinimizeCommand}" Grid.Column="2" Grid.Row="0" Background="{StaticResource BackgroundDarkBrush}" BorderBrush="{StaticResource BackgroundDarkBrush}" WindowChrome.IsHitTestVisibleInChrome="True" ToolTip="Minimize">
+                <!-- Windows System Buttons-->
+                <Button Name="minimizeButton" Command="{Binding MinimizeCommand}" Grid.Column="2" Background="Transparent" WindowChrome.IsHitTestVisibleInChrome="True" ToolTip="Minimize" Margin="0 0 5 0">
                     <Button.Style>
                         <Style TargetType="{x:Type Button}">
                             <Setter Property="Template">
                                 <Setter.Value>
                                     <ControlTemplate TargetType="Button">
-                                        <Grid x:Name="grid_minimize" Background="{StaticResource BackgroundDarkBrush}">
+                                        <Grid x:Name="grid_minimize" Background="Transparent">
                                             <Image
                                             RenderOptions.BitmapScalingMode="HighQuality"
                                             x:Name="buttonImage"
@@ -85,9 +130,7 @@
                                             VerticalAlignment="Center" />
                                         </Grid>
                                         <ControlTemplate.Triggers>
-                                            <Trigger Property="IsMouseOver" Value="true">
-                                                <Setter TargetName="grid_minimize" Property="Background" Value="{StaticResource BackgroundLightBrush}" />
-                                            </Trigger>
+                                            
                                         </ControlTemplate.Triggers>
                                     </ControlTemplate>
                                 </Setter.Value>
@@ -95,13 +138,13 @@
                         </Style>
                     </Button.Style>
                 </Button>
-                <Button Name="maximizeButton" Command="{Binding MaximizeCommand}" Grid.Column="3" Grid.Row="0" Background="{StaticResource BackgroundDarkBrush}" BorderBrush="{StaticResource BackgroundDarkBrush}" WindowChrome.IsHitTestVisibleInChrome="True"  ToolTip="Maximize">
+                <Button Name="maximizeButton" Command="{Binding MaximizeCommand}" Grid.Column="3" Background="Transparent" WindowChrome.IsHitTestVisibleInChrome="True"  ToolTip="Maximize" Margin="0 0 5 0">
                     <Button.Style>
                         <Style TargetType="{x:Type Button}">
                             <Setter Property="Template">
                                 <Setter.Value>
                                     <ControlTemplate TargetType="Button">
-                                        <Grid x:Name="grid_maximize" Background="{StaticResource BackgroundDarkBrush}">
+                                        <Grid x:Name="grid_maximize" Background="Transparent">
                                             <Image
                                             RenderOptions.BitmapScalingMode="HighQuality"
                                             x:Name="buttonImage"
@@ -114,9 +157,7 @@
                                             VerticalAlignment="Center" />
                                         </Grid>
                                         <ControlTemplate.Triggers>
-                                            <Trigger Property="IsMouseOver" Value="true">
-                                                <Setter TargetName="grid_maximize" Property="Background" Value="{StaticResource BackgroundLightBrush}" />
-                                            </Trigger>
+                                            
                                         </ControlTemplate.Triggers>
                                     </ControlTemplate>
                                 </Setter.Value>
@@ -124,13 +165,13 @@
                         </Style>
                     </Button.Style>
                 </Button>
-                <Button Command="{Binding CloseCommand}" Name="closeButton" Grid.Column="4" Grid.Row="0" Background="{StaticResource BackgroundDarkBrush}" BorderBrush="{StaticResource BackgroundDarkBrush}" WindowChrome.IsHitTestVisibleInChrome="True"  ToolTip="Close">
+                <Button Command="{Binding CloseCommand}" Name="closeButton" Grid.Column="4" Background="Transparent" WindowChrome.IsHitTestVisibleInChrome="True"  ToolTip="Close" Margin="0 0 10 0">
                     <Button.Style>
                         <Style TargetType="{x:Type Button}">
                             <Setter Property="Template">
                                 <Setter.Value>
                                     <ControlTemplate TargetType="Button">
-                                        <Grid x:Name="grid_close" Background="{StaticResource BackgroundDarkBrush}">
+                                        <Grid x:Name="grid_close" Background="Transparent">
                                             <Image
                                             RenderOptions.BitmapScalingMode="HighQuality"
                                             x:Name="buttonImage"
@@ -143,9 +184,7 @@
                                             VerticalAlignment="Center" />
                                         </Grid>
                                         <ControlTemplate.Triggers>
-                                            <Trigger Property="IsMouseOver" Value="true">
-                                                <Setter TargetName="grid_close" Property="Background" Value="Red" />
-                                            </Trigger>
+                                            
                                         </ControlTemplate.Triggers>
                                     </ControlTemplate>
                                 </Setter.Value>
@@ -153,17 +192,9 @@
                         </Style>
                     </Button.Style>
                 </Button>
+
             </Grid>
-
-
-
-            <Frame Background="{StaticResource BackgroundDarkBrush}" Height="45" Grid.Column="0" Grid.Row="0"/>
-            <Image RenderOptions.BitmapScalingMode="HighQuality" Grid.Column="0" Grid.Row="0" Source="/logo-color.png" VerticalAlignment="Center" HorizontalAlignment="Center" Width="35"/>
-
-
-        </Grid>
-
-        
+        </Border>
         <!-- Dimmed overlay
         <Border Grid.RowSpan="2"
                 Grid.Row="0"
@@ -173,419 +204,48 @@
                     local:AnimateFadeInProperty.Value="{Binding DimmableOverlayVisible}"
                     />
         </Border>
-         -->
+        -->
 
-        <!-- Main Content -->
-        <Grid Grid.Row="1">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
-
-            <!-- Side Bar -->
-            <Grid Background="#23272A" 
-                  Grid.Column="0" 
-                  Grid.Row="1" 
-                  Width="60" 
-                  local:AnimateSlideInFromLeftProperty.Value="{Binding ApplicationViewModel.SideMenuVisible, 
-                                 Source={x:Static local:ViewModelLocator.Instance}}">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="60"/>
-                    <RowDefinition Height="60"/>
-                    <RowDefinition Height="60"/>
-                    <RowDefinition Height="60"/>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="60"/>
-                    <RowDefinition Height="60"/>
-                    <RowDefinition Height="20"/>
-                    <RowDefinition Height="60"/>
-                </Grid.RowDefinitions>
-
-                <Frame Grid.Column="0" Grid.Row="0" BorderBrush="#5eb3ce" BorderThickness="0,0,1,0"/>
-
-                <ToggleButton
-                x:Name="button"
-                Grid.Column="0"
+        <!-- Page content -->
+        <local:PageHost
                 Grid.Row="1"
-                Margin="0"
-                ClickMode="Press"
-                Foreground="{x:Null}"
-                UseLayoutRounding="True"
-                Click="Person_Button">
-                    <ToggleButton.Style>
-                        <Style TargetType="{x:Type ToggleButton}">
-                            <Setter Property="Template">
-                                <Setter.Value>
-                                    <ControlTemplate TargetType="ToggleButton">
-                                        <Border
-                                        Name="border"
-                                        BorderThickness="0,0,1,0"
-                                        BorderBrush="#5eb3ce"
-                                        TextBlock.Foreground="{StaticResource ForegroundVeryLightBrush}">
-                                            <Grid x:Name="grid" Background="#23272A">
-                                                <TextBlock
-                                                RenderOptions.BitmapScalingMode="HighQuality"
-                                                x:Name="buttonText"
-                                                FontFamily="{StaticResource FontAwesome}"
-                                                Foreground="Black"
-                                                Text="{StaticResource FontAwesomePerson}"
-                                                VerticalAlignment="Center"
-                                                HorizontalAlignment="Center"
-                                                FontSize="40"
-                                                Margin="0,0,1,0"/>
-                                                <ContentPresenter
-                                                Margin="{TemplateBinding Padding}"
-                                                HorizontalAlignment="Center"
-                                                VerticalAlignment="Center" />
-                                            </Grid>
-                                        </Border>
-                                        <ControlTemplate.Triggers>
-                                            <Trigger Property="IsMouseOver" Value="true">
-                                                <Setter TargetName="buttonText" Property="Foreground" Value="{StaticResource MainBlueBrush}" />
+                d:DataContext=""
+                DataContext="{Binding ApplicationViewModel.CurrentPage, 
+                                    Source={x:Static local:ViewModelLocator.Instance}, 
+                                    Converter={local:ApplicationPageValueConverter}}"
+                CurrentPage="{Binding}" />
 
-                                            </Trigger>
-                                            <Trigger Property="IsChecked" Value="true">
-                                                <Setter TargetName="buttonText" Property="Foreground" Value="{StaticResource MainBlueBrush}" />
-                                                <Setter TargetName="border" Property="BorderThickness" Value="1,1,0,1"/>
-                                                <Setter TargetName="grid" Property="Background" Value="#2c2f33"/>
-                                            </Trigger>
-                                        </ControlTemplate.Triggers>
-                                    </ControlTemplate>
-                                </Setter.Value>
-                            </Setter>
-                        </Style>
-                    </ToggleButton.Style>
-                </ToggleButton>
+        <!-- View Image Overlay -->
+        <Border Background="{StaticResource BackgroundDarkBrush}"
+                Grid.Row="1"
+                Margin="15 7.5 15 15"
+                CornerRadius="10"
+                Visibility="{Binding ApplicationViewModel.ViewImageOverlayVisible, 
+                                Source={x:Static local:ViewModelLocator.Instance}, 
+                                Converter={local:BooleanToVisibilityConverter},
+                                ConverterParameter=True}"
+                    >
+            <Grid>
+                <Image VerticalAlignment="Center"
+                            HorizontalAlignment="Center"
+                            Source="{Binding ApplicationViewModel.ViewImageLocalPath, 
+                                    Source={x:Static local:ViewModelLocator.Instance}}"
+                            Margin="50"
+                            />
 
-                <ToggleButton
-                x:Name="button1"
-                Grid.Column="0"
-                Grid.Row="2"
-                Margin="0"
-                ClickMode="Press"
-                Foreground="{x:Null}"
-                UseLayoutRounding="True"
-                Click="Group_Button">
-                    <ToggleButton.Style>
-                        <Style TargetType="{x:Type ToggleButton}">
-                            <Setter Property="Template">
-                                <Setter.Value>
-                                    <ControlTemplate TargetType="ToggleButton">
-                                        <Border
-                                        Name="border1"
-                                        BorderThickness="0,0,1,0"
-                                        BorderBrush="#5eb3ce"
-                                        TextBlock.Foreground="{StaticResource ForegroundVeryLightBrush}">
-                                            <Grid x:Name="grid1" Background="#23272A">
-                                                <TextBlock
-                                                RenderOptions.BitmapScalingMode="HighQuality"
-                                                x:Name="buttonText1"
-                                                FontFamily="{StaticResource FontAwesome}"
-                                                Foreground="Black"
-                                                Text="{StaticResource FontAwesomeGroup}"
-                                                VerticalAlignment="Center"
-                                                HorizontalAlignment="Center"
-                                                FontSize="33"
-                                                Margin="0,0,1,0"/>
-
-                                                <ContentPresenter
-                                            Margin="{TemplateBinding Padding}"
-                                            HorizontalAlignment="Center"
-                                            VerticalAlignment="Center" />
-                                            </Grid>
-                                        </Border>
-                                        <ControlTemplate.Triggers>
-                                            <Trigger Property="IsMouseOver" Value="true">
-                                                <Setter TargetName="buttonText1" Property="Foreground" Value="{StaticResource MainBlueBrush}" />
-                                            </Trigger>
-                                            <Trigger Property="IsChecked" Value="true">
-                                                <Setter TargetName="buttonText1" Property="Foreground" Value="{StaticResource MainBlueBrush}" />
-                                                <Setter TargetName="border1" Property="BorderThickness" Value="1,1,0,1"/>
-                                                <Setter TargetName="grid1" Property="Background" Value="#2c2f33"/>
-                                            </Trigger>
-                                        </ControlTemplate.Triggers>
-                                    </ControlTemplate>
-                                </Setter.Value>
-                            </Setter>
-                        </Style>
-                    </ToggleButton.Style>
-                </ToggleButton>
-
-
-                <ToggleButton
-                x:Name="button2"
-                Grid.Column="0"
-                Grid.Row="3"
-                Margin="0"
-                ClickMode="Press"
-                Foreground="{x:Null}"
-                UseLayoutRounding="True"
-                Click="Globus_Button">
-                    <ToggleButton.Style>
-                        <Style TargetType="{x:Type ToggleButton}">
-                            <Setter Property="Template">
-                                <Setter.Value>
-                                    <ControlTemplate TargetType="ToggleButton">
-                                        <Border
-                                        Name="border2"
-                                        BorderThickness="0,0,1,0"
-                                        BorderBrush="#5eb3ce"
-                                        TextBlock.Foreground="{StaticResource ForegroundVeryLightBrush}">
-                                            <Grid x:Name="grid2" Background="#23272A">
-                                                <TextBlock
-                                                RenderOptions.BitmapScalingMode="HighQuality"
-                                                x:Name="buttonText2"
-                                                FontFamily="{StaticResource FontAwesome}"
-                                                Foreground="Black"
-                                                Text="{StaticResource FontAwesomeGlobe}"
-                                                VerticalAlignment="Center"
-                                                HorizontalAlignment="Center"
-                                                FontSize="40"
-                                                Margin="0,0,1,0"/>
-
-                                                <ContentPresenter
-                                                Margin="{TemplateBinding Padding}"
-                                                HorizontalAlignment="Center"
-                                                VerticalAlignment="Center" />
-                                            </Grid>
-                                        </Border>
-                                        <ControlTemplate.Triggers>
-                                            <Trigger Property="IsMouseOver" Value="true">
-                                                <Setter TargetName="buttonText2" Property="Foreground" Value="{StaticResource MainBlueBrush}" />
-
-                                            </Trigger>
-                                            <Trigger Property="IsChecked" Value="true">
-                                                <Setter TargetName="buttonText2" Property="Foreground" Value="{StaticResource MainBlueBrush}" />
-                                                <Setter TargetName="border2" Property="BorderThickness" Value="1,1,0,1"/>
-                                                <Setter TargetName="grid2" Property="Background" Value="#2c2f33"/>
-                                            </Trigger>
-                                        </ControlTemplate.Triggers>
-                                    </ControlTemplate>
-                                </Setter.Value>
-                            </Setter>
-                        </Style>
-                    </ToggleButton.Style>
-                </ToggleButton>
-
-
-                <Frame Grid.Column="0" Grid.Row="4" BorderBrush="#5eb3ce" BorderThickness="0,0,1,0"/>
-
-                <ToggleButton
-                x:Name="button3"
-                Grid.Column="0"
-                Grid.Row="5"
-                Margin="0"
-                ClickMode="Press"
-                Foreground="{x:Null}"
-                UseLayoutRounding="True"
-                Click="User_Button">
-                    <ToggleButton.Style>
-                        <Style TargetType="{x:Type ToggleButton}">
-                            <Setter Property="Template">
-                                <Setter.Value>
-                                    <ControlTemplate TargetType="ToggleButton">
-                                        <Border
-                                        x:Name="border3"
-                                        BorderThickness="0,0,1,0"
-                                        BorderBrush="#5eb3ce"
-                                        TextBlock.Foreground="{StaticResource ForegroundVeryLightBrush}">
-                                            <Grid x:Name="grid3" Background="#23272A">
-                                                <TextBlock
-                                                RenderOptions.BitmapScalingMode="HighQuality"
-                                                x:Name="buttonText3"
-                                                FontFamily="{StaticResource FontAwesome}"
-                                                Foreground="Black"
-                                                Text="{StaticResource FontAwesomeProfile}"
-                                                VerticalAlignment="Center"
-                                                HorizontalAlignment="Center"
-                                                FontSize="35"
-                                                Margin="0,0,1,0"/>
-
-                                                <ContentPresenter
-                                                Margin="{TemplateBinding Padding}"
-                                                HorizontalAlignment="Center"
-                                                VerticalAlignment="Center" />
-                                            </Grid>
-                                        </Border>
-                                        <ControlTemplate.Triggers>
-                                            <Trigger Property="IsMouseOver" Value="true">
-                                                <Setter TargetName="buttonText3" Property="Foreground" Value="{StaticResource MainBlueBrush}" />
-
-                                            </Trigger>
-                                            <Trigger Property="IsChecked" Value="true">
-                                                <Setter TargetName="buttonText3" Property="Foreground" Value="{StaticResource MainBlueBrush}" />
-                                                <Setter TargetName="border3" Property="BorderThickness" Value="1,1,0,1"/>
-                                                <Setter TargetName="grid3" Property="Background" Value="#2c2f33"/>
-                                            </Trigger>
-                                        </ControlTemplate.Triggers>
-                                    </ControlTemplate>
-                                </Setter.Value>
-                            </Setter>
-                        </Style>
-                    </ToggleButton.Style>
-                </ToggleButton>
-
-                <ToggleButton
-                x:Name="button4"
-                Grid.Column="0"
-                Grid.Row="6"
-                Margin="0"
-                ClickMode="Press"
-                Foreground="{x:Null}"
-                UseLayoutRounding="True"
-                Click="Settings_Button">
-                    <ToggleButton.Style>
-                        <Style TargetType="{x:Type ToggleButton}">
-                            <Setter Property="Template">
-                                <Setter.Value>
-                                    <ControlTemplate TargetType="ToggleButton">
-                                        <Border
-                                        x:Name="border4"
-                                        BorderThickness="0,0,1,0"
-                                        BorderBrush="#5eb3ce"
-                                        TextBlock.Foreground="{StaticResource ForegroundVeryLightBrush}">
-                                            <Grid x:Name="grid4" Background="#23272A">
-                                                <TextBlock
-                                                RenderOptions.BitmapScalingMode="HighQuality"
-                                                x:Name="buttonText4"
-                                                FontFamily="{StaticResource FontAwesome}"
-                                                Foreground="Black"
-                                                Text="{StaticResource FontAwesomeSettings}"
-                                                VerticalAlignment="Center"
-                                                HorizontalAlignment="Center"
-                                                FontSize="40"
-                                                Margin="0,0,1,0"/>
-
-                                                <ContentPresenter
-                                                Margin="{TemplateBinding Padding}"
-                                                HorizontalAlignment="Center"
-                                                VerticalAlignment="Center" />
-                                            </Grid>
-                                        </Border>
-                                        <ControlTemplate.Triggers>
-                                            <Trigger Property="IsMouseOver" Value="true">
-                                                <Setter TargetName="buttonText4" Property="Foreground" Value="{StaticResource MainBlueBrush}" />
-
-                                            </Trigger>
-                                            <Trigger Property="IsChecked" Value="true">
-                                                <Setter TargetName="buttonText4" Property="Foreground" Value="{StaticResource MainBlueBrush}" />
-                                                <Setter TargetName="border4" Property="BorderThickness" Value="1,1,0,1"/>
-                                                <Setter TargetName="grid4" Property="Background" Value="#2c2f33"/>
-                                            </Trigger>
-                                        </ControlTemplate.Triggers>
-                                    </ControlTemplate>
-                                </Setter.Value>
-                            </Setter>
-                        </Style>
-                    </ToggleButton.Style>
-                </ToggleButton>
-
-                <Frame Grid.Column="0" Grid.Row="7" BorderBrush="#5eb3ce" BorderThickness="0,0,1,0"/>
-                <Rectangle Grid.Column="0" Grid.Row="7" Fill="#5eb3ce" Height="2" Width="20"/>
-
-
-                <Button
-                x:Name="button5"
-                Grid.Column="0"
-                Grid.Row="8"
-                Margin="0"
-                ClickMode="Press"
-                Foreground="{x:Null}"
-                UseLayoutRounding="True"
-                Click="Info_Button" RenderTransformOrigin="0.867,0.175">
-                    <Button.Style>
-                        <Style TargetType="{x:Type Button}">
-                            <Setter Property="Template">
-                                <Setter.Value>
-                                    <ControlTemplate TargetType="Button">
-                                        <Border
-                                        x:Name="border5"
-                                        BorderThickness="0,0,1,0"
-                                        BorderBrush="#5eb3ce"
-                                        TextBlock.Foreground="{StaticResource ForegroundVeryLightBrush}">
-                                            <Grid x:Name="grid5" Background="#23272A">
-                                                <TextBlock
-                                                RenderOptions.BitmapScalingMode="HighQuality"
-                                                x:Name="buttonText5"
-                                                FontFamily="{StaticResource FontAwesome}"
-                                                Foreground="Black"
-                                                Text="{StaticResource FontAwesomeInfo}"
-                                                VerticalAlignment="Center"
-                                                HorizontalAlignment="Center"
-                                                FontSize="40"
-                                                Margin="0,0,1,0"/>
-
-                                                <ContentPresenter
-                                                Margin="{TemplateBinding Padding}"
-                                                HorizontalAlignment="Center"
-                                                VerticalAlignment="Center" />
-                                            </Grid>
-                                        </Border>
-                                        <ControlTemplate.Triggers>
-                                            <Trigger Property="IsMouseOver" Value="true">
-                                                <Setter TargetName="buttonText5" Property="Foreground" Value="{StaticResource MainBlueBrush}" />
-
-                                            </Trigger>
-                                            <Trigger Property="IsPressed" Value="true">
-                                                <Setter TargetName="buttonText5" Property="Foreground" Value="{StaticResource MainBlueBrush}" />
-                                            </Trigger>
-                                        </ControlTemplate.Triggers>
-                                    </ControlTemplate>
-                                </Setter.Value>
-                            </Setter>
-                        </Style>
-                    </Button.Style>
-                </Button>
+                <Button Style="{StaticResource IconGrowButton}" 
+                            VerticalAlignment="Top"
+                            HorizontalAlignment="Right"
+                            Foreground="Red"
+                            Background="Transparent"
+                            Content="{StaticResource FontAwesomeCloseIcon}"
+                            Command="{Binding CloseViewImageOverlayCommand}"
+                            Height="50"
+                            FontFamily="{StaticResource FontAwesome}"/>
             </Grid>
 
-            <Grid Grid.Column="1">
-                <!-- Page content -->
-                <local:PageHost
-                   d:DataContext=""
-                   DataContext="{Binding ApplicationViewModel.CurrentPage, 
-                                     Source={x:Static local:ViewModelLocator.Instance}, 
-                                     Converter={local:ApplicationPageValueConverter}}"
-                   CurrentPage="{Binding}" />
-
-                <!-- View Image Overlay -->
-                <Border Background="Black"
-                        Margin="15"
-                        CornerRadius="15"
-                        Visibility="{Binding ApplicationViewModel.ViewImageOverlayVisible, 
-                                     Source={x:Static local:ViewModelLocator.Instance}, 
-                                     Converter={local:BooleanToVisibilityConverter},
-                                     ConverterParameter=True}"
-                        >
-                    <Grid>
-                        <Image VerticalAlignment="Center"
-                               HorizontalAlignment="Center"
-                               Source="{Binding ApplicationViewModel.ViewImageLocalPath, 
-                                     Source={x:Static local:ViewModelLocator.Instance}}"
-                               Margin="50"
-                               />
-
-                        <Button Style="{StaticResource IconGrowButton}" 
-                                VerticalAlignment="Top"
-                                HorizontalAlignment="Right"
-                                Foreground="Red"
-                                Background="Transparent"
-                                Content="{StaticResource FontAwesomeCloseIcon}"
-                                Command="{Binding CloseViewImageOverlayCommand}"
-                                Height="50"
-                                FontFamily="{StaticResource FontAwesome}"/>
-                    </Grid>
-
-                </Border>
-            </Grid>
-        </Grid>
-
-
-
-
-        <!-- <Frame Grid.Row="1" x:Name="MainFrame" NavigationUIVisibility="Hidden" Background="Transparent"/> -->
+        </Border>
+        
     </Grid>
-
-
-
 </Window>
 

@@ -14,8 +14,7 @@
                     <ControlTemplate TargetType="{x:Type ContentControl}">
 
                         <!-- Content -->
-                        <Border x:Name="background" 
-                                Background="{StaticResource BackgroundLightBrush}"
+                        <Border x:Name="background"
                                 CornerRadius="10">
 
                             <!-- Click to open message -->
@@ -110,11 +109,6 @@
 
                         <!-- Hover effect -->
                         <ControlTemplate.Triggers>
-
-                            <DataTrigger Binding="{Binding IsSelected}" Value="True">
-                                <Setter Property="Background" TargetName="background" Value="{StaticResource HoverGreyBrush}"/>
-                            </DataTrigger>
-                            
                             <EventTrigger RoutedEvent="MouseEnter">
                                 <BeginStoryboard>
                                     <Storyboard>
@@ -133,8 +127,11 @@
                                 <Setter Property="Background" TargetName="container" Value="{StaticResource HoverGreyBrush}"/>
                             </Trigger>
 
+                            <DataTrigger Binding="{Binding IsSelected}" Value="True">
+                                <Setter Property="Background" TargetName="background" Value="{StaticResource HoverGreyBrush}"/>
+                            </DataTrigger>
                         </ControlTemplate.Triggers>
-
+                        
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
