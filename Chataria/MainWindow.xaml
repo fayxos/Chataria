@@ -37,10 +37,10 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        
+
         <!-- Title Bar -->
         <Border Grid.Row="0"
-                Margin="15 15 15 7.5"
+                Margin="15 15 15 0"
                 CornerRadius="10"
                 Background="{StaticResource MainBlueBrush}">
             <Grid>
@@ -207,33 +207,65 @@
         -->
 
         <!-- Page content -->
-        <local:PageHost
-                Grid.Row="1"
+        <Grid Grid.Row="1"
+              Margin="15">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            
+            <!-- Main Content-->
+            <local:PageHost
+                Grid.Column="1"
                 d:DataContext=""
                 DataContext="{Binding ApplicationViewModel.CurrentPage, 
                                     Source={x:Static local:ViewModelLocator.Instance}, 
                                     Converter={local:ApplicationPageValueConverter}}"
                 CurrentPage="{Binding}" />
 
-        <!-- View Image Overlay -->
-        <Border Background="{StaticResource BackgroundDarkBrush}"
-                Grid.Row="1"
-                Margin="15 7.5 15 15"
+            <!-- Side Menu -->
+            <Border Grid.Column="0" 
+                    Margin="15"
+                    Visibility="Collapsed"
+                    DataContext="{Binding ApplicationViewModel, Source={x:Static local:ViewModelLocator.Instance}}"
+                    local:AnimateSlideInFromLeftProperty.Value="{Binding SideMenuVisible}"
+                    Width="350"
+                    CornerRadius="10"
+                    Background="{StaticResource BackgroundDarkBrush}">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <!-- Top Menu Bar -->
+                    <Grid Height="60">
+                        <!-- TODO -->
+                    </Grid>
+
+                    <local:ChatListControl Grid.Row="1"/>
+                </Grid>
+            </Border>
+            
+            <!-- View Image Overlay -->
+            <Border Background="{StaticResource BackgroundDarkBrush}"
+                Grid.Column="0"
+                Grid.ColumnSpan="2"
                 CornerRadius="10"
                 Visibility="{Binding ApplicationViewModel.ViewImageOverlayVisible, 
                                 Source={x:Static local:ViewModelLocator.Instance}, 
                                 Converter={local:BooleanToVisibilityConverter},
                                 ConverterParameter=True}"
                     >
-            <Grid>
-                <Image VerticalAlignment="Center"
+                <Grid>
+                    <Image VerticalAlignment="Center"
                             HorizontalAlignment="Center"
                             Source="{Binding ApplicationViewModel.ViewImageLocalPath, 
                                     Source={x:Static local:ViewModelLocator.Instance}}"
                             Margin="50"
                             />
 
-                <Button Style="{StaticResource IconGrowButton}" 
+                    <Button Style="{StaticResource IconGrowButton}" 
                             VerticalAlignment="Top"
                             HorizontalAlignment="Right"
                             Foreground="Red"
@@ -242,10 +274,10 @@
                             Command="{Binding CloseViewImageOverlayCommand}"
                             Height="50"
                             FontFamily="{StaticResource FontAwesome}"/>
-            </Grid>
+                </Grid>
 
-        </Border>
-        
+            </Border>
+        </Grid>
     </Grid>
 </Window>
 

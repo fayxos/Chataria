@@ -138,7 +138,7 @@ namespace Chataria
             {
                 case PageAnimation.SlideAndFadeOutToLeft:
                     // Start the animation
-                    await this.SlideAndFadeOutAsync(AnimationSlideInDirection.Left, SlideSeconds);
+                    await this.SlideAndFadeOutAsync(AnimationSlideInDirection.Left, SlideSeconds, size: (int)Application.Current.MainWindow.Width);
 
                     break;
             }

@@ -26,7 +26,7 @@ namespace Chataria.Core
         /// <summary>
         /// True if the side menu should be shown
         /// </summary>
-        public bool SideMenuVisible { get; set; } = true;
+        public bool SideMenuVisible { get; set; } = false;
 
         /// <summary>
         /// True if the edit profile menu should be shown

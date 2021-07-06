@@ -11,65 +11,38 @@
       Drop="MessageText_Drop"
         >
 
-    <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="350"/>
-            <ColumnDefinition Width="*"/>
-        </Grid.ColumnDefinitions>
+    <!-- Message List-->
+    <Border Margin="15 0 0 0"
+            CornerRadius="10"
+            Background="{StaticResource BackgroundDarkBrush}">
+        <Grid>
+            <Grid.RowDefinitions>
+                <!-- Chat List -->
+                <RowDefinition Height="*"/>
 
-        <!-- Chat List -->
-        <Border Grid.Column="0" 
-                Margin="15 7.5 7.5 15"
-                CornerRadius="10"
-                Background="{StaticResource BackgroundDarkBrush}">
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="*"/>
-                </Grid.RowDefinitions>
+                <!-- Chat Send Bar -->
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
 
-                <!-- Top Menu Bar -->
-                <Grid Height="60">
-                    <!-- TODO -->
-                </Grid>
-
-                <local:ChatListControl Grid.Row="1"/>
-            </Grid>
-        </Border>
-
-        <!-- Message List-->
-        <Border Grid.Column="1" 
-                Margin="7.5 7.5 15 15"
-                CornerRadius="10"
-                Background="{StaticResource BackgroundDarkBrush}">
-            <Grid>
-                <Grid.RowDefinitions>
-                    <!-- Chat List -->
-                    <RowDefinition Height="*"/>
-
-                    <!-- Chat Send Bar -->
-                    <RowDefinition Height="Auto"/>
-                </Grid.RowDefinitions>
-
-                <!-- Send Image Overlay -->
-                <Border Grid.Row="0" 
+            <!-- Send Image Overlay -->
+            <Border Grid.Row="0" 
                 CornerRadius="10 0 0 0"
                 Panel.ZIndex="1"
                     
                 >
-                    <Border Margin="15 10 14 0" 
+                <Border Margin="15 10 14 0" 
                     CornerRadius="15" 
                     Background="Black"
                     Visibility="{Binding SendImageOverlayVisible, Converter={local:BooleanToVisibilityConverter}, ConverterParameter=True}"  
                         >
-                        <Grid>
-                            <Image VerticalAlignment="Center"
+                    <Grid>
+                        <Image VerticalAlignment="Center"
                             HorizontalAlignment="Center"
                             Source="{Binding LocalImagePath}"
                             Margin="50"
                             />
 
-                            <Button Style="{StaticResource IconGrowButton}" 
+                        <Button Style="{StaticResource IconGrowButton}" 
                             VerticalAlignment="Top"
                             HorizontalAlignment="Right"
                             Foreground="Red"
@@ -78,21 +51,21 @@
                             Command="{Binding CLoseImageAttachment}"
                             Height="50"
                             FontFamily="{StaticResource FontAwesome}"/>
-                        </Grid>
-                    </Border>
-
-
+                    </Grid>
                 </Border>
 
-                <!-- Chat Dialog -->
-                <Border Grid.Row="0">
-                    <local:ChatMessageListControl 
+
+            </Border>
+
+            <!-- Chat Dialog -->
+            <Border Grid.Row="0">
+                <local:ChatMessageListControl 
                         x:Name="ChatMessageList"
                         DataContext="{Binding}"/>
-                </Border>
+            </Border>
 
 
-                <!-- Attachment Menu Pop-up 
+            <!-- Attachment Menu Pop-up 
                 <local:BubbleContent DataContext="{Binding AttachmentMenu}" 
                                         Grid.Row="1"
                                         VerticalAlignment="Bottom"
@@ -101,33 +74,33 @@
                 -->
 
 
-                <!-- Attachment Menu Pop-up -->
-                <local:AttachmentPopup
+            <!-- Attachment Menu Pop-up -->
+            <local:AttachmentPopup
                         Visibility="Collapsed"
                         x:Name="PopUp"
                         VerticalAlignment="Bottom"
                         local:AnimateSlideInFromBottomProperty.Value="{Binding AttachmentMenuVisible}"/>
 
-                <!-- Message Send Text Bar -->
-                <Border  
+            <!-- Message Send Text Bar -->
+            <Border  
                     Grid.Row="1"
                     Margin="15 10 15 20" 
                     CornerRadius="15" 
                     Background="{StaticResource BackgroundLightBrush}"
                     MaxHeight="108"
                     MinHeight="50">
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <!--^Attach button -->
-                            <ColumnDefinition Width="Auto"/>
-                            <!-- Text Entry box -->
-                            <ColumnDefinition Width="*"/>
-                            <!--Additional buttons-->
-                            <ColumnDefinition Width="Auto"/>
-                        </Grid.ColumnDefinitions>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <!--^Attach button -->
+                        <ColumnDefinition Width="Auto"/>
+                        <!-- Text Entry box -->
+                        <ColumnDefinition Width="*"/>
+                        <!--Additional buttons-->
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
 
-                        <!-- Attach button -->
-                        <Button Style="{StaticResource IconGrowButton}"
+                    <!-- Attach button -->
+                    <Button Style="{StaticResource IconGrowButton}"
                             Content="{StaticResource FontAwesomePaperclipIcon}"
                             Foreground="{StaticResource ForegroundLightBrush}"
                             Height="50"
@@ -136,7 +109,7 @@
                             Command="{Binding AttachmentButtonCommand}"    
                             />
 
-                        <TextBox Grid.Column="1" 
+                    <TextBox Grid.Column="1" 
                             x:Name="MessageText"
                             Tag="Write Message..."
                             Style="{StaticResource SendTextBox}"
@@ -146,32 +119,30 @@
                             PreviewKeyDown="MessageText_PreviewKeyDown"
                                 />
 
-                        <!-- Additional buttons -->
-                        <StackPanel Grid.Column="2"
+                    <!-- Additional buttons -->
+                    <StackPanel Grid.Column="2"
                                 Orientation="Horizontal"
                                 VerticalAlignment="Bottom"
                                 >
-                            <!-- Emoji button -->
-                            <Button Style="{StaticResource EmojiButton}"
+                        <!-- Emoji button -->
+                        <Button Style="{StaticResource EmojiButton}"
                                 x:Name="AA"
                                 Content="😀"
                                 Height="50"
                                 MouseEnter="Button_MouseEnter"
                                 />
-                            <!-- Send Button -->
-                            <Button Style="{StaticResource IconGrowButton}"
+                        <!-- Send Button -->
+                        <Button Style="{StaticResource IconGrowButton}"
                                 Foreground="{StaticResource MainBlueBrush}"
                                 Content="{StaticResource FontAwesomeSend}"
                                 Focusable="False"
                                 Height="50"
                                 Command="{Binding SendCommand}"
                         />
-                        </StackPanel>
-                    </Grid>
-                </Border>
-            </Grid>
-        </Border>
-    </Grid>
-
+                    </StackPanel>
+                </Grid>
+            </Border>
+        </Grid>
+    </Border>
 
 </local:BasePage>

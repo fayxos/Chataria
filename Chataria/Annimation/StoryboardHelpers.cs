@@ -101,7 +101,7 @@ namespace Chataria
         /// <param name="keepMargin">Whether to keep the element at the same width during anmation</param>
         public static void AddSlideToLeft(this Storyboard storyboard, float seconds, double offset, float decelerationRatio = 0.9f, bool keepMargin = true)
         {
-            // Create the margin animate from rigth
+            // Create the margin animate from right
             var animation = new ThicknessAnimation
             {
                 Duration = new Duration(TimeSpan.FromSeconds(seconds)),

@@ -13,8 +13,7 @@
 
 
         <!-- Main Content -->
-    <Border Margin="15 7.5 15 15"
-            Background="{StaticResource BackgroundDarkBrush}"
+    <Border Background="{StaticResource BackgroundDarkBrush}"
             CornerRadius="10">
                 <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
                     <StackPanel
