@@ -69,26 +69,6 @@ namespace Chataria
 
         #region Property Changed Events
 
-
-        /// <summary>
-        /// Called when the <see cref="CurrentMainPage"/> value has Changed
-        /// </summary>
-        /// <param name="d"></param>
-        /// <param name="e"></param>
-        private static void CurrentPageViewModelPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            // Get current values
-            var currentPageViewModel = d.GetValue(CurrentPageViewModelProperty);
-
-            // Get the frames
-            var MainContent = (d as PageHost).NewPage;
-
-            // Get the current main Page
-            if (MainContent.Content is BasePageMain page)
-                // Update the view model
-                page.ViewModelObject = currentPageViewModel;
-        }
-
         /// <summary>
         /// Called when the <see cref="CurrentPage"/> value has Changed
         /// </summary>

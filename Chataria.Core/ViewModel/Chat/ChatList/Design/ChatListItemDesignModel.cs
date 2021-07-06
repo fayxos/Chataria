@@ -24,7 +24,7 @@ namespace Chataria.Core
         public ChatListItemDesignModel()
         {
             Initials = "MG";
-            Name = "Mira";
+            Name = "Mary";
             Message = "This chat app is awesome!";
             ProfilePictureRGB = "5eb3ce";
         }

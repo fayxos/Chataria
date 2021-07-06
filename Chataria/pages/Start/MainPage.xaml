@@ -64,6 +64,77 @@
                         DataContext="{Binding}"/>
             </Border>
 
+            <!-- Buttons -->
+            <StackPanel Orientation="Horizontal"
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Top"
+                        Margin="15">
+                <!-- Search Button -->
+                <Border Margin="0 0 10 0"
+                        Background="{StaticResource BackgroundLightBrush}"
+                        CornerRadius="15"
+                        Height="40"
+                        Width="40">
+                    <Button Style="{StaticResource IconGrowButton}" 
+                        Content="{StaticResource FontAwesomeSearchIcon}" 
+                        Command="{Binding OpenSearchCommand}"
+                            />
+                </Border>
+                <Border Background="{StaticResource BackgroundLightBrush}"
+                        CornerRadius="15"
+                        Height="40"
+                        Width="40">
+                    <Button Style="{StaticResource IconGrowButton}" 
+                        Content="{StaticResource FontAwesomeEllipsisVerticalIcon}"
+                        />
+                </Border>
+            </StackPanel>
+
+            <!-- Search Overlay -->
+            <Grid Margin="15"
+                  VerticalAlignment="Top"
+                   HorizontalAlignment="Stretch">
+                <Border   
+                    Height="40"
+                    CornerRadius="15"
+                    Background="{StaticResource BackgroundLightBrush}"
+                    local:AnimateSlideInFromRightMarginProperty.Value="{Binding SearchIsOpen}">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <!-- Close search Button -->
+                        <Button Style="{StaticResource IconGrowButton}" 
+                            Content="{StaticResource FontAwesomeCloseIcon}" 
+                            Command="{Binding CloseSearchCommand}"
+                            Foreground="{StaticResource MainBlueBrush}"
+                            />
+
+                        <!-- Search Box -->
+                        <TextBox 
+                        VerticalAlignment="Center"
+                        Grid.Column="1" 
+                        Tag="Search Message..."
+                        Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}"
+                        Foreground="White"
+                        FontSize="{StaticResource FontSizeLarge}"
+                        Style="{StaticResource SearchTextBoxNoBorder}"
+                        Margin="0 0 15 0"
+                        local:FocusAndSelectProperty.Value="{Binding SearchIsOpen}"
+                        >
+                            <TextBox.InputBindings>
+                                <!-- Clear text on escape -->
+                                <KeyBinding Command="{Binding ClearSearchCommand}" Key="Esc"/>
+                                <!-- Search on enter -->
+                                <KeyBinding Command="{Binding SearchCommand}" Key="Return"/>
+                            </TextBox.InputBindings>
+                        </TextBox>
+
+                    </Grid>
+                </Border>
+            </Grid>
 
             <!-- Attachment Menu Pop-up 
                 <local:BubbleContent DataContext="{Binding AttachmentMenu}" 

@@ -1,16 +1,15 @@
 ﻿using Chataria.Core;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
-using System.Text;
+using System.Windows;
 
 namespace Chataria
 {
     /// <summary>
-    /// Converts the <see cref="ApplicationPage"/> to an actual view/page
+    /// Converts the <see cref="ApplicationPage"/> to an background color
     /// </summary>
-    public class ApplicationPageValueConverter : BaseValueConverter<ApplicationPageValueConverter>
+    public class ApplicationPageToBackgroundConverter : BaseValueConverter<ApplicationPageToBackgroundConverter>
     {
         public override object Convert(object value, Type targetType = null, object parameter = null, CultureInfo culture = null)
         {
@@ -18,16 +17,16 @@ namespace Chataria
             switch ((ApplicationPage)value)
             {
                 case ApplicationPage.Login:
-                    return new LoginPage(parameter as LoginViewModel);
+                    return Application.Current.FindResource("BackgroundDarkBrush");
 
                 case ApplicationPage.Register:
-                    return new RegisterPage(parameter as RegisterViewModel);
+                    return Application.Current.FindResource("BackgroundDarkBrush");
 
                 case ApplicationPage.Main:
-                    return new MainPage();
+                    return parameter != null ? Application.Current.FindResource("BackgroundLightBrush") : Application.Current.FindResource("BackgroundDarkBrush");
 
                 case ApplicationPage.Settings:
-                    return new SettingsPage();
+                    return parameter != null ? Application.Current.FindResource("BackgroundDarkBrush") : Application.Current.FindResource("BackgroundLightBrush");
 
                 default:
                     Debugger.Break();

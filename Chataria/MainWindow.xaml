@@ -73,41 +73,7 @@
                 
                 <!-- Title Bar Buttons -->
                 <StackPanel Orientation="Horizontal" Grid.Column="1">
-                    <!-- Search message-->
-                    <Grid Height="40">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto"/>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
-
-                        <!-- Close search Button -->
-                        <Button Style="{StaticResource IconGrowButton}" 
-                            Content="{StaticResource FontAwesomeCloseIcon}" 
-                            Command="{Binding CloseSearchCommand}"
-                            Foreground="{StaticResource MainBlueBrush}"
-                            />
-
-                        <!-- Search Box -->
-                        <TextBox 
-                            VerticalAlignment="Center"
-                            Grid.Column="1" 
-                            Tag="Search Message..."
-                            Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}"
-                            Foreground="White"
-                            FontSize="{StaticResource FontSizeLarge}"
-                            Style="{StaticResource TextBoxPlaceholder}"
-                            Margin="0 0 15 0"
-                            local:FocusAndSelectProperty.Value="{Binding SearchIsOpen}"
-                            >
-                            <TextBox.InputBindings>
-                                <!-- Clear text on escape -->
-                                <KeyBinding Command="{Binding ClearSearchCommand}" Key="Esc"/>
-                                <!-- Search on enter -->
-                                <KeyBinding Command="{Binding SearchCommand}" Key="Return"/>
-                            </TextBox.InputBindings>
-                        </TextBox>
-
-                    </Grid>
+                    
                 </StackPanel>
 
                 <!-- Windows System Buttons-->
@@ -240,7 +206,34 @@
 
                     <!-- Top Menu Bar -->
                     <Grid Height="60">
-                        <!-- TODO -->
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Border Background="{Binding CurrentPage, Converter={local:ApplicationPageToBackgroundConverter}, ConverterParameter=True}"
+                                CornerRadius="15"
+                                Margin="10">
+                            <Button Background="Transparent"
+                                Foreground="{StaticResource ForegroundLightBrush}"
+                                Style="{StaticResource IconChangeColorButton}"
+                                Content="{StaticResource FontAwesomePerson}"
+                                FontSize="200"
+                                Command="{Binding MainPageCommand}"
+                                />
+                        </Border>
+                        <Border Background="{Binding CurrentPage, Converter={local:ApplicationPageToBackgroundConverter}}"
+                                CornerRadius="15"
+                                Margin="10"
+                                Grid.Column="1">
+                            <Button 
+                                Background="Transparent"
+                                Foreground="{StaticResource ForegroundLightBrush}"
+                                Style="{StaticResource IconChangeColorButton}"
+                                Content="{StaticResource FontAwesomeSettings}"
+                                FontSize="200"
+                                Command="{Binding SettingsPageCommand}"
+                                />
+                        </Border>
                     </Grid>
 
                     <local:ChatListControl Grid.Row="1"/>

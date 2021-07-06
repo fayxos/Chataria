@@ -1,4 +1,5 @@
 ﻿using Chataria.Core;
+using System;
 using System.Windows;
 using System.Windows.Input;
 
@@ -259,7 +260,6 @@ namespace Chataria
             // CLear path
             IoC.Application.ViewImageLocalPath = string.Empty;
         }
-
 
         #endregion
     }

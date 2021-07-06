@@ -17,10 +17,10 @@
             CornerRadius="10">
                 <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
                     <StackPanel
-                        VerticalAlignment="Top"
+                        VerticalAlignment="Center"
                         TextBlock.TextAlignment="Center">
 
-                        <Border Padding="15 50 15 15">
+                        <Border Padding="15 0 15 15">
                             <StackPanel>
                                 <TextBlock Text="Sign Up" 
                                         FontSize="40" 
@@ -30,8 +30,8 @@
                                             FontSize="17"
                                             Margin="0 0 0 20"
                                             Foreground="{StaticResource LightGreyBrush}"/>
-                        <TextBox Text="{Binding Email}" local:IsFocusedProperty.Value="True"  Style="{StaticResource TextBoxPlaceholder}" Tag="Email"  Width="400"/>
-                        <PasswordBox x:Name="PasswordText" Style="{StaticResource PasswordBoxPlaceholder}" Tag="Password"  Width="400"/>
+                                <TextBox Text="{Binding Email}" local:IsFocusedProperty.Value="True"  Style="{StaticResource TextBoxPlaceholder}" Tag="Email"  Width="400"/>
+                                <PasswordBox x:Name="PasswordText" Style="{StaticResource PasswordBoxPlaceholder}" Tag="Password"  Width="400"/>
 
                                 <Button 
                                     x:Name="SubmitButton" 

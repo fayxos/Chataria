@@ -23,6 +23,11 @@ namespace Chataria.Core
         /// <summary>
         /// The Main Page
         /// </summary>
-        Main = 2
+        Main = 2,
+
+        /// <summary>
+        /// The Settings Page
+        /// </summary>
+        Settings = 3,
     }
 }

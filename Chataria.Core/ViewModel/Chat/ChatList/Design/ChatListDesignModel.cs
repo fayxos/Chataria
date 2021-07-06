@@ -43,7 +43,7 @@ namespace Chataria.Core
                 },
                 new ChatListItemViewModel
                 {
-                    Name = "Mira",
+                    Name = "Mary",
                     Initials = "M",
                     Message = "The new server is upm got 192.168.1.1",
                     ProfilePictureRGB = "00d405",
@@ -66,7 +66,7 @@ namespace Chataria.Core
                 },
                 new ChatListItemViewModel
                 {
-                    Name = "Mira",
+                    Name = "Mary",
                     Initials = "M",
                     Message = "The new server is upm got 192.168.1.1",
                     ProfilePictureRGB = "00d405",
@@ -89,7 +89,7 @@ namespace Chataria.Core
                 },
                 new ChatListItemViewModel
                 {
-                    Name = "Mira",
+                    Name = "Mary",
                     Initials = "M",
                     Message = "The new server is upm got 192.168.1.1",
                     ProfilePictureRGB = "00d405"

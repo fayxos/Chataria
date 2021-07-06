@@ -2,6 +2,7 @@
 using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Windows.Input;
 
 namespace Chataria.Core
 {
@@ -10,6 +11,8 @@ namespace Chataria.Core
     /// </summary>
     public class ApplicationViewModel : BaseViewModel
     {
+        #region Public Properties
+
         /// <summary>
         /// The current Page of the application
         /// </summary>
@@ -43,6 +46,40 @@ namespace Chataria.Core
         /// </summary>
         public string ViewImageLocalPath { get; set; }
 
+        #endregion
+
+        #region Commands
+
+        /// <summary>
+        /// The command to go to main page
+        /// </summary>
+        public ICommand MainPageCommand { get; set; }
+
+        /// <summary>
+        /// The command to go to settings page
+        /// </summary>
+        public ICommand SettingsPageCommand { get; set; }
+
+        /// <summary>
+        /// The command to go to file page
+        /// </summary>
+        public ICommand FilePageCommand { get; set; }
+
+        #endregion
+
+        #region Constructor
+
+        public ApplicationViewModel()
+        {
+            MainPageCommand = new RelayCommand(ToMainPage);
+            SettingsPageCommand = new RelayCommand(ToSettingsPage);
+            FilePageCommand = new RelayCommand(ToFilePage);
+        }
+
+        #endregion
+
+        #region Public Methods
+
         /// <summary>
         /// Navigates to the specified page
         /// </summary>
@@ -68,5 +105,30 @@ namespace Chataria.Core
 
             OnPropertyChanged(nameof(CurrentPage));
         }
+
+        #endregion
+
+        #region Private Methods
+
+        private void ToMainPage()
+        {
+            if(CurrentPage != ApplicationPage.Main)
+                // Go to main page
+                GoToPage(ApplicationPage.Main);
+        }
+
+        private void ToSettingsPage()
+        {
+            if (CurrentPage != ApplicationPage.Settings)
+                // Go to settings page
+                GoToPage(ApplicationPage.Settings);
+        }
+
+        private void ToFilePage()
+        {
+
+        }
+
+        #endregion
     }
 }
