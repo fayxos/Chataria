@@ -23,19 +23,19 @@ namespace Chataria
         /// True if this is the very first time the value has been updated
         /// Used to make sure we run the logic at least once during first load
         /// </summary>
-        protected Dictionary<WeakReference, bool> mAlreadyLoaded = new Dictionary<WeakReference, bool>();
+        protected Dictionary<WeakReference, bool> mAlreadyLoaded = new();
 
         /// <summary>
         /// The most recent value used if we get a value changed before we do the first load
         /// </summary>
-        protected Dictionary<WeakReference, bool> mFirstLoadValue = new Dictionary<WeakReference, bool>();
+        protected Dictionary<WeakReference, bool> mFirstLoadValue = new();
 
         #endregion
 
         public override void OnValueUpdated(DependencyObject sender, object value)
         {
             // Get the framework element
-            if (!(sender is FrameworkElement element))
+            if (sender is not FrameworkElement element)
                 return;
 
             // Try and get the already loaded reference
@@ -110,7 +110,7 @@ namespace Chataria
         public override void OnValueUpdated(DependencyObject sender, object value)
         {
             // Make sure we have an image
-            if (!(sender is Image image))
+            if (sender is not Image image) 
                 return;
 
             // If we want to animate in...
@@ -138,7 +138,7 @@ namespace Chataria
         public override void OnValueUpdated(DependencyObject sender, object value)
         {
             // Make sure we have an image
-            if (!(sender is Border border))
+            if (sender is not Border border)
                 return;
 
             // If we want to animate in...

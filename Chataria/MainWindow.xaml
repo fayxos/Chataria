@@ -236,7 +236,12 @@
                         </Border>
                     </Grid>
 
-                    <local:ChatListControl Grid.Row="1"/>
+                    <local:ChatListControl Grid.Row="1"
+                                           local:AnimateFadeInProperty.Value="{Binding CurrentPage, Converter={local:ApplicationPageToBooleanConverter}}"/>
+
+
+                    <local:SettingsControl Grid.Row="1"
+                                           local:AnimateFadeInProperty.Value="{Binding CurrentPage, Converter={local:ApplicationPageToBooleanConverter}, ConverterParameter=True}"/>
                 </Grid>
             </Border>
             
