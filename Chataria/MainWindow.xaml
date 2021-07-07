@@ -236,12 +236,21 @@
                         </Border>
                     </Grid>
 
+                    <!-- Content -->
+                    <local:SideMenuHost Grid.Row="1" 
+                                        DataContext="{Binding ApplicationViewModel.CurrentSideMenuContent, 
+                                        Source={x:Static local:ViewModelLocator.Instance}, 
+                                        Converter={local:SideMenuContentConverter}}"
+                                CurrentSideMenuContent="{Binding}"/>
+
+                    <!--
                     <local:ChatListControl Grid.Row="1"
                                            local:AnimateFadeInProperty.Value="{Binding CurrentPage, Converter={local:ApplicationPageToBooleanConverter}}"/>
 
 
                     <local:SettingsControl Grid.Row="1"
                                            local:AnimateFadeInProperty.Value="{Binding CurrentPage, Converter={local:ApplicationPageToBooleanConverter}, ConverterParameter=True}"/>
+                    -->
                 </Grid>
             </Border>
             

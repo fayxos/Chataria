@@ -23,6 +23,11 @@ namespace Chataria.Core
         public BaseViewModel CurrentPageViewModel { get; set; } = new ChatMessageListViewModel();
 
         /// <summary>
+        /// The current side menu content
+        /// </summary>
+        public SideMenuContent CurrentSideMenuContent { get; set; } = SideMenuContent.Main;
+
+        /// <summary>
         /// True if the side menu should be shown
         /// </summary>
         public bool SideMenuVisible { get; set; } = true;
@@ -97,7 +102,14 @@ namespace Chataria.Core
             if (page == ApplicationPage.Login || page == ApplicationPage.Register)
                 SideMenuVisible = false;
             else
+            {
+                if (page == ApplicationPage.Main)
+                    CurrentSideMenuContent = SideMenuContent.Main;
+                else
+                    CurrentSideMenuContent = SideMenuContent.Settings;
                 SideMenuVisible = true;
+            }
+                
 
             OnPropertyChanged(nameof(CurrentPage));
         }

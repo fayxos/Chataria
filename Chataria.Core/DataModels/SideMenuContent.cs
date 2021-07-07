@@ -6,28 +6,18 @@ namespace Chataria.Core
 {
 
     /// <summary>
-    /// A page of the Application
+    /// Side Menu Content
     /// </summary>
-    public enum ApplicationPage
+    public enum SideMenuContent
     {
         /// <summary>
         /// The initial login page
         /// </summary>
-        Login = 0,
+        Main = 0,
 
         /// <summary>
         /// The register Page
         /// </summary>
-        Register = 1,
-        
-        /// <summary>
-        /// The Main Page
-        /// </summary>
-        Main = 2,
-
-        /// <summary>
-        /// The Settings Page
-        /// </summary>
-        Settings = 3,
+        Settings = 1
     }
 }
