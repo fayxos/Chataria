@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.IdentityModel.Tokens.Jwt;
@@ -7,6 +9,14 @@ using System.Text;
 
 namespace Chataria.WebServer.Controllers
 {
+    public class AuthorizeTokenAttribute : AuthorizeAttribute
+    {
+        public AuthorizeTokenAttribute()
+        {
+            AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme;
+        }
+    }
+
     /// <summary>
     /// Manages the Web API calls
     /// </summary>
@@ -24,8 +34,9 @@ namespace Chataria.WebServer.Controllers
             var claims = new[]
             {
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString("N")),
-                new Claim(JwtRegisteredClaimNames.NameId, "unknownuser"),                
+                new Claim(JwtRegisteredClaimNames.NameId, "unknownuser"),
                 new Claim(JwtRegisteredClaimNames.Email, email),
+                new Claim("http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name", "fayxos"),
                 new Claim("my key", "my value")
             };
 
@@ -48,6 +59,15 @@ namespace Chataria.WebServer.Controllers
             {
                 token = new JwtSecurityTokenHandler().WriteToken(token)
             });
+        }
+
+        [AuthorizeToken]
+        [Route("api/private")]
+        public IActionResult Private()
+        {
+            var user = HttpContext.User;
+
+            return Ok(new { privateData = $"some secret for {user.FindFirst(JwtRegisteredClaimNames.NameId)}" });
         }
     }
 }

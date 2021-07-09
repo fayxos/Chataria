@@ -37,6 +37,7 @@
 
   <ItemGroup>
     <PackageReference Include="Dna.Framework" Version="1.0.7.19" />
+    <PackageReference Include="Emoji.Wpf" Version="0.3.3" />
     <PackageReference Include="Fody" Version="6.5.1">
       <PrivateImages>all</PrivateImages>
       <IncludeImages>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeImages>

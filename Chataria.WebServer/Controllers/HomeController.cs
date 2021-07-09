@@ -110,7 +110,7 @@ namespace Chataria.WebServer.Controllers
         /// Private area. No peeking
         /// </summary>
         /// <returns></returns>
-        [Authorize(AuthenticationSchemes = "Identity.Application,Bearer")]
+        [Authorize]
         [Route("private")]
         public IActionResult Private()
         {

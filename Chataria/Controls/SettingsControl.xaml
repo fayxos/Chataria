@@ -28,11 +28,23 @@
                     Foreground="{StaticResource ForegroundLightBrush}"
                     VerticalAlignment="Center"
                     HorizontalAlignment="Center"
+                    FontWeight="Bold"
                     FontSize="{StaticResource FontSizeLarge}"/>
             <!-- Switch -->
-            <local:ToggleButton Height="40"
-                            Grid.Column="1"
+            <StackPanel Grid.Column="1"
+                        Orientation="Horizontal"
+                        HorizontalAlignment="Center">
+                <TextBlock Text="Dark"
+                           FontSize="{StaticResource FontSizeLarge}"
+                           VerticalAlignment="Center"/>
+                <local:ToggleButton Height="40"
+                                    Width="70"
                             HorizontalAlignment="Center"/>
+                <TextBlock Text="Light"
+                           FontSize="{StaticResource FontSizeLarge}"
+                           Foreground="White"
+                           VerticalAlignment="Center"/>
+            </StackPanel>
         </Grid>
 
         <!-- Appearance -->
@@ -48,6 +60,7 @@
                     FontSize="{StaticResource FontSizeLarge}"/>
             <!-- Switch -->
             <local:ToggleButton Height="40"
+                                Width="70"
                             Grid.Column="1"
                             HorizontalAlignment="Center"/>
         </Grid>
