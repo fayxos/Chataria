@@ -74,7 +74,9 @@ namespace Chataria.WebServer
                 options.ExpireTimeSpan = TimeSpan.FromSeconds(1500);
             });
 
-            services.AddMvc();
+            services.AddMvc(options =>
+                options.EnableEndpointRouting = false
+                );
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -86,23 +88,25 @@ namespace Chataria.WebServer
             // Setup Identity
             app.UseAuthentication();
 
+            // If in development...
             if (env.IsDevelopment())
+                // Show any exceptions in browser when they crash
                 app.UseDeveloperExceptionPage();
+            // Otherwise...
             else
+                // Just show generic error page
                 app.UseExceptionHandler("/Home/Error");
 
+            // Serve static files
             app.UseStaticFiles();
 
+            // Setup MVC routes
             app.UseMvc(routes =>
             {
+                // Default route of /controller/action/info
                 routes.MapRoute(
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{moreInfo?}");
-
-                routes.MapRoute(
-                    name: "aboutPage",
-                    template: "more",
-                    defaults: new { controller = "About", action = "TellMeMore" });
             });
         }
     }

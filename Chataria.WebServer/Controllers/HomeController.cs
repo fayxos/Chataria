@@ -95,7 +95,9 @@ namespace Chataria.WebServer.Controllers
             var result = await mUserManager.CreateAsync(new ApplicationUser
             {
                 UserName = "fayxos",
-                Email = "felixhaag@hotmail.de"
+                Email = "felixhaag@hotmail.de",
+                FirstName = "Felix",
+                LastName = "Haag"
             }, "password");
 
             
@@ -152,5 +154,6 @@ namespace Chataria.WebServer.Controllers
 
             return Content("Failed to login", "text/html");
         }
+
     }
 }
