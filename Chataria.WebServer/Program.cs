@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore;
+﻿using Dna.AspNet;
+using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using System.IO;
 
@@ -14,6 +15,8 @@ namespace Chataria.WebServer
         public static IWebHost BuildWebHost(string[] args)
         {
             return WebHost.CreateDefaultBuilder()
+                // Add Dna Framework
+                .UseDnaFramework()
                 .UseStartup<Startup>()
                 .Build();
         }

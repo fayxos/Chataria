@@ -11,6 +11,7 @@ namespace Chataria.WebServer
         /// The unique Id for this entry
         /// </summary>
         [Key]
+        [Required]
         public string Id { get; set; }
 
         /// <summary>

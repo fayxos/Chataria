@@ -1,5 +1,6 @@
 ﻿using Chataria.Core;
 using Chataria.Core.Logging;
+using Dna;
 using System;
 using System.Collections.Generic;
 using System.Configuration;

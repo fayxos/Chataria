@@ -38,9 +38,11 @@
   <ItemGroup>
     <PackageReference Include="Dna.Framework" Version="1.0.7.19" />
     <PackageReference Include="Emoji.Wpf" Version="0.3.3" />
-    <PackageReference Include="Fody" Version="6.5.1">
+    <PackageReference Include="Fody" Version="6.5.2">
       <PrivateImages>all</PrivateImages>
       <IncludeImages>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeImages>
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Ninject" Version="3.3.4" />
     <PackageReference Include="PropertyChanged.Fody" Version="3.4.0" />

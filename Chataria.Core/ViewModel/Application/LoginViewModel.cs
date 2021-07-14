@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Net;
 using System.Security;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -58,10 +59,10 @@ namespace Chataria.Core
         {
             await RunCommand(() => LoginIsRunning, async () =>
             {
-                // TODO: Fake login...
-                await Task.Delay(1000);
+                // Call the server and attempt to login with credentials
+                // var result = await WebRequest.PostAsync<>
 
-                // Ok succesfully logged in... now get users data
+                // OK successfully logged in... now get users data
                 // TODO: Ask server for users info
 
 

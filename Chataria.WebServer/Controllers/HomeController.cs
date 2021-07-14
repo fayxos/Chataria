@@ -62,7 +62,7 @@ namespace Chataria.WebServer.Controllers
                 // Add a new setting
                 mContext.Settings.Add(new SettingsDataModel
                 {
-                    Name = "BackgroundColor",
+                    //Name = "BackgroundColor",
                     Value = "Red"
                 });
 
