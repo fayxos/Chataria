@@ -4,6 +4,7 @@ using System.Security;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Chataria;
+using Dna;
 
 namespace Chataria.Core
 {
@@ -60,28 +61,62 @@ namespace Chataria.Core
             await RunCommand(() => LoginIsRunning, async () =>
             {
                 // Call the server and attempt to login with credentials
-                // var result = await WebRequest.PostAsync<>
+                // TODO: Moves all urls and api rotes to static class in core
+                var result = await WebRequests.PostAsync<ApiResponse<LoginResultApiModel>>(
+                    "http://localhost:5001/api/login", 
+                    new LoginCredentialsApiModel
+                    {
+                        UsernameOrEmail = Email,
+                        Password = (parameter as IHavePassword).SecurePassword.Unsecure(),
+                    });
 
-                // OK successfully logged in... now get users data
-                // TODO: Ask server for users info
+                // If there was no response, bad data, or a response with an error message...
+                if(result == null || result.ServerResponse == null || !result.ServerResponse.Successful)
+                {
+                    // Default error message
+                    // TODO: Localize strings
+                    var message = "Unknown error from server call";
 
+                    // If we got a response from the server...
+                    if (result?.ServerResponse != null)
+                        // Set message to servers response
+                        message = result.ServerResponse.ErrorMessage;
+                    // If we have a result but deserialized failed...
+                    else if (!string.IsNullOrWhiteSpace(result?.RawServerResponse))
+                        // Set error message
+                        message = $"Unexpected response from server. {result.RawServerResponse}";
+                    // If we have a result but no server response details at all...
+                    else if (result != null)
+                        //  Set message to standard HTTP server response details
+                        message = $"Failed to communicate with server. Status code {result.StatusCode}. {result.StatusDescription}";
+
+                    // Display error
+                    await IoC.UI.ShowMessage(new MessageBoxDialogViewModel
+                    {
+                        // TODO: Localize strings
+                        Title = "Login Failed",
+                        Message = message
+                    });
+
+                    // We are done
+                    return;
+                }
+
+                // Successfully logged in... now get users data
+                var userData = result.ServerResponse.Response;
 
                 // TODO: Remove this with real information pulled from our database in future
-                IoC.Profile.Username = new TextEntryViewModel { Label = "Username", OriginalText = $"Fayxos {DateTime.Now.ToLocalTime()}" };
-                IoC.Profile.Name = new TextEntryViewModel { Label = "Name", OriginalText = "Felix Haag" };
-                IoC.Profile.Email = new TextEntryViewModel { Label = "Email", OriginalText = "Email@ermail.de" };
+                IoC.Profile.Username = new TextEntryViewModel { Label = "Username", OriginalText = userData.Username };
+                IoC.Profile.Name = new TextEntryViewModel { Label = "Name", OriginalText = $"{userData.FirstName} {userData.LastName}" };
+                IoC.Profile.Email = new TextEntryViewModel { Label = "Email", OriginalText = userData.Email };
                 IoC.Profile.Password = new PasswordEntryViewModel { Label = "Password", FakePassword = "********" };
-                IoC.Profile.PostCount = 1;
-                IoC.Profile.FollowerCount = 200;
-                IoC.Profile.FollowingCount = 100;
-                IoC.Profile.FriendCount = 20;
 
                 // Go to chat page
                 IoC.Get<ApplicationViewModel>().GoToPage(ApplicationPage.Main);
 
                 //var email = Email;
 
-                //// IMPORTANT: Never store unsecure password in variable like this
+                //// IMPORTANT: Never store insecure password in variable like this
                 //var pass = (parameter as IHavePassword).SecurePassword.Unsecure();
             });
         }

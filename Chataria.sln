@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Chataria", "Chataria\Chatar
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Chataria.Core", "Chataria.Core\Chataria.Core.csproj", "{A83CDD14-4BF4-41D8-9826-5C25B9A9800F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chataria.Relational", "Chataria.Relational\Chataria.Relational.csproj", "{02718E0D-475A-4D32-BB77-93F0341BE46A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{A83CDD14-4BF4-41D8-9826-5C25B9A9800F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A83CDD14-4BF4-41D8-9826-5C25B9A9800F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A83CDD14-4BF4-41D8-9826-5C25B9A9800F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{02718E0D-475A-4D32-BB77-93F0341BE46A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{02718E0D-475A-4D32-BB77-93F0341BE46A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{02718E0D-475A-4D32-BB77-93F0341BE46A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{02718E0D-475A-4D32-BB77-93F0341BE46A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

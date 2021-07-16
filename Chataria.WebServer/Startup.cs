@@ -3,6 +3,7 @@ using Dna.AspNet;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -77,8 +78,11 @@ namespace Chataria.WebServer
             });
 
             services.AddMvc(options =>
-                options.EnableEndpointRouting = false
-                );
+            {
+                //options.InputFormatters.Add(new XmlSerializerInputFormatter());
+                //options.InputFormatters.Add(new XmlSerializerOutputFormatter());
+                options.EnableEndpointRouting = false;
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

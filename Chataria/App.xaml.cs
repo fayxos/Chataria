@@ -41,6 +41,11 @@ namespace Chataria
         /// </summary>
         private void ApplicationSetup()
         {
+            // Setup the Dna Framework
+            new DefaultFrameworkConstruction()
+                .AddFileLogger()
+                .Build();
+
             // Setup IoC
             IoC.Setup();
 
@@ -49,7 +54,7 @@ namespace Chataria
             { 
                 // TODO: Add ApplicationSettings so we can set/edit a log location
                 // For now just log to the path where this application is running
-                new FileLogger("log.txt"),
+                new Core.FileLogger("log.txt"),
             }));
 
             // Bind a task manager
@@ -63,5 +68,15 @@ namespace Chataria
 
             
         }
+
+    }
+
+    public class SettingsDataModel
+    {
+        public string Id { get; set; }
+
+        public string Name { get; set; }
+
+        public string Value { get; set; }
     }
 }

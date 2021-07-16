@@ -155,5 +155,10 @@ namespace Chataria.WebServer.Controllers
             return Content("Failed to login", "text/html");
         }
 
+        [Route("test")]
+        public SettingsDataModel Test([FromBody]SettingsDataModel model)
+        {
+            return new SettingsDataModel { Id = "Some id", Name = "Felix", Value = "10" };
+        }
     }
 }
