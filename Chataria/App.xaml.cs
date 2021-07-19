@@ -1,5 +1,6 @@
 ﻿using Chataria.Core;
 using Chataria.Core.Logging;
+using Chataria.Relational;
 using Dna;
 using System;
 using System.Collections.Generic;
@@ -20,13 +21,13 @@ namespace Chataria
         /// Custom startup so we load our IoC immediately before anything else
         /// </summary>
         /// <param name="e"></param>
-        protected override void OnStartup(StartupEventArgs e)
+        protected override async void OnStartup(StartupEventArgs e)
         {
             // Let the base application do what it needs
             base.OnStartup(e);
 
             // Setup the main application
-            ApplicationSetup();
+            await ApplicationSetupAsync();
 
             // Log it
             IoC.Logger.Log("Application starting up...", LogLevel.Debug);
@@ -39,11 +40,12 @@ namespace Chataria
         /// <summary>
         /// Configures our application ready to use
         /// </summary>
-        private void ApplicationSetup()
+        private async Task ApplicationSetupAsync()
         {
             // Setup the Dna Framework
             new DefaultFrameworkConstruction()
                 .AddFileLogger()
+                .UseClientDataStore()
                 .Build();
 
             // Setup IoC
@@ -66,7 +68,8 @@ namespace Chataria
             // Bind a UI Manager
             IoC.Kernel.Bind<IUIManager>().ToConstant(new UIManager());
 
-            
+            // Ensure the client data store
+            // await IoC.ClientDataStore.EnsureDataStoreAsync();
         }
 
     }

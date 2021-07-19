@@ -11,7 +11,7 @@ namespace Chataria.Core
         /// <summary>
         /// Determines if the current user has logged in credentials
         /// </summary>
-        bool HasCredentials { get; }
+        Task<bool> HasCredentials();
 
         /// <summary>
         /// makes sure the client data store is correctly set up
@@ -23,13 +23,13 @@ namespace Chataria.Core
         /// Get the stored login credentials for this client
         /// </summary>
         /// <returns>Returns the login credentials if they exist, or null if none exist</returns>
-        Task<LoginCredentialsDataModel> GetLoginCredentials();
+        Task<LoginCredentialsDataModel> GetLoginCredentialsAsync();
 
         /// <summary>
         /// Stores the given login credentials to the backing data store
         /// </summary>
         /// <param name="loginCredentials">The login credentials to save</param>
         /// <returns>Returns a task that will finish once the save is complete</returns>
-        Task SaveLoginCredentials(LoginCredentialsDataModel loginCredentials);
+        Task SaveLoginCredentialsAsync(LoginCredentialsDataModel loginCredentials);
     }
 }

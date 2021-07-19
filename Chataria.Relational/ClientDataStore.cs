@@ -1,4 +1,5 @@
 ﻿using Chataria.Core;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Chataria.Relational
@@ -10,28 +11,59 @@ namespace Chataria.Relational
     /// </summary>
     public class ClientDataStore : IClientDataStore
     {
-        #region Public Properties
+        #region Protected Members
 
-        public bool HasCredentials => throw new System.NotImplementedException();
+        /// <summary>
+        /// The database context for the client data store
+        /// </summary>
+        protected ClientDataStoreDbContext mDbContest;
+
+        #endregion
+
+        #region Constructor
+
+        /// <summary>
+        /// Default Constructor
+        /// </summary>
+        /// <param name="dbContext">The database to use</param>
+        public ClientDataStore(ClientDataStoreDbContext dbContext)
+        {
+            // Set local member
+            mDbContest = dbContext;
+        }
 
         #endregion
 
         #region Interface Implementation
 
-        public Task EnsureDataStoreAsync()
+        public async Task<bool> HasCredentials()
         {
-            throw new System.NotImplementedException();
+            return await GetLoginCredentialsAsync() != null;
         }
 
-        public Task<LoginCredentialsDataModel> GetLoginCredentials()
+        public async Task EnsureDataStoreAsync()
         {
-            throw new System.NotImplementedException();
+            // Make sure the database exists and is created
+            await mDbContest.Database.EnsureCreatedAsync();
         }
 
-        public Task SaveLoginCredentials(LoginCredentialsDataModel loginCredentials)
+        public Task<LoginCredentialsDataModel> GetLoginCredentialsAsync()
         {
-            throw new System.NotImplementedException();
-        } 
+            // Get the first column in the login credentials table, or null if none exists
+            return Task.FromResult(mDbContest.LoginCredentials.FirstOrDefault());
+        }
+
+        public async Task SaveLoginCredentialsAsync(LoginCredentialsDataModel loginCredentials)
+        {
+            // Clear all entries
+            mDbContest.LoginCredentials.RemoveRange(mDbContest.LoginCredentials);
+
+            // Add new one
+            mDbContest.LoginCredentials.Add(loginCredentials);
+
+            // Save changes
+            await mDbContest.SaveChangesAsync();
+        }
 
         #endregion
     }

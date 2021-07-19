@@ -1,4 +1,5 @@
-﻿using Ninject;
+﻿using Dna;
+using Ninject;
 using System;
 
 namespace Chataria.Core
@@ -44,6 +45,11 @@ namespace Chataria.Core
         /// A shortcut to access the <see cref="ProfileViewModel"/>
         /// </summary>
         public static ProfileViewModel Profile => IoC.Get<ProfileViewModel>();
+
+        /// <summary>
+        /// A shortcut to access the <see cref="IClientDataStore"/> service
+        /// </summary>
+        public static IClientDataStore ClientDataStore => Framework.Service<IClientDataStore>();
 
 
         #endregion

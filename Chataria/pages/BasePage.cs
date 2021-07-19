@@ -55,7 +55,7 @@ namespace Chataria
         /// <summary>
         /// The time any slide animation takes to complete
         /// </summary>
-        public float SlideSeconds { get; set; } = 0.6f;
+        public float SlideSeconds { get; set; } = 0.8f;
 
         /// <summary>
         /// A flag to indicate if this page should aniamte out on load 

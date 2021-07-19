@@ -12,7 +12,7 @@ namespace Chataria.Core
         /// <summary>
         /// The current Page of the application
         /// </summary>
-        public ApplicationPage CurrentPage { get; private set; } = ApplicationPage.Login;
+        public ApplicationPage CurrentPage { get; private set; } = ApplicationPage.Main;
 
         /// <summary>
         /// The view model to use for the current page when the current page changes
@@ -30,7 +30,7 @@ namespace Chataria.Core
         /// <summary>
         /// True if the side menu should be shown
         /// </summary>
-        public bool SideMenuVisible { get; set; } = false;
+        public bool SideMenuVisible { get; set; } = true;
 
         /// <summary>
         /// True if the edit profile menu should be shown
