@@ -61,7 +61,7 @@ namespace Chataria.Core
             await RunCommand(() => LoginIsRunning, async () =>
             {
                 // Call the server and attempt to login with credentials
-                // TODO: Moves all urls and api rotes to static class in core
+                // TODO: Moves all URLs and api rotes to static class in core
                 var result = await WebRequests.PostAsync<ApiResponse<LoginResultApiModel>>(
                     "http://localhost:5001/api/login", 
                     new LoginCredentialsApiModel
@@ -105,11 +105,18 @@ namespace Chataria.Core
                 // Successfully logged in... now get users data
                 var userData = result.ServerResponse.Response;
 
-                // TODO: Remove this with real information pulled from our database in future
-                IoC.Profile.Username = new TextEntryViewModel { Label = "Username", OriginalText = userData.Username };
-                IoC.Profile.Name = new TextEntryViewModel { Label = "Name", OriginalText = $"{userData.FirstName} {userData.LastName}" };
-                IoC.Profile.Email = new TextEntryViewModel { Label = "Email", OriginalText = userData.Email };
-                IoC.Profile.Password = new PasswordEntryViewModel { Label = "Password", FakePassword = "********" };
+                // Store this in the client data store
+                await IoC.ClientDataStore.SaveLoginCredentialsAsync(new LoginCredentialsDataModel
+                {
+                    Email = userData.Email,
+                    FirstName = userData.FirstName,
+                    LastName = userData.LastName,
+                    Username = userData.Username,
+                    Token = userData.Token
+                });
+
+                // Load new settings
+                await IoC.Profile.LoadAsync();
 
                 // Go to chat page
                 IoC.Get<ApplicationViewModel>().GoToPage(ApplicationPage.Main);

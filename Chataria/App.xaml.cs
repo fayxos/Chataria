@@ -32,6 +32,9 @@ namespace Chataria
             // Log it
             IoC.Logger.Log("Application starting up...", LogLevel.Debug);
 
+            // Setup the application view model based on if we are logged in
+            IoC.Application.GoToPage(await IoC.ClientDataStore.HasCredentials() ? ApplicationPage.Main : ApplicationPage.Login);
+
             // Show the main window
             Current.MainWindow = new MainWindow();
             Current.MainWindow.Show();
@@ -69,7 +72,10 @@ namespace Chataria
             IoC.Kernel.Bind<IUIManager>().ToConstant(new UIManager());
 
             // Ensure the client data store
-            // await IoC.ClientDataStore.EnsureDataStoreAsync();
+            await IoC.ClientDataStore.EnsureDataStoreAsync();
+
+            // Load new settings
+            await IoC.Profile.LoadAsync();
         }
 
     }

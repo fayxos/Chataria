@@ -24,26 +24,6 @@ namespace Chataria.Core
         public string Bio { get; set; }
 
         /// <summary>
-        /// Number of Posts
-        /// </summary>
-        public int PostCount { get; set; }
-
-        /// <summary>
-        /// Number of Followers
-        /// </summary>
-        public int FollowerCount { get; set; }
-
-        /// <summary>
-        /// Number of Followings
-        /// </summary>
-        public int FollowingCount { get; set; }
-
-        /// <summary>
-        /// Number of Friends
-        /// </summary>
-        public int FriendCount { get; set; }
-
-        /// <summary>
         /// The current users name
         /// </summary>
         public TextEntryViewModel Name { get; set; }
@@ -89,29 +69,14 @@ namespace Chataria.Core
         public ICommand LogoutCommand { get; set; }
 
         /// <summary>
-        /// The command to clear the users data from teh view model
+        /// The command to clear the users data from the view model
         /// </summary>
         public ICommand ClearUserDataCommand { get; set; }
 
         /// <summary>
-        /// The command to show the posts
+        /// Loads the settings data from the client data store
         /// </summary>
-        public ICommand ShowPostsCommand { get; set; }
-
-        /// <summary>
-        /// The commmand to show the followers
-        /// </summary>
-        public ICommand ShowFollowersCommand { get; set; }
-
-        /// <summary>
-        /// The commmand to show the followings
-        /// </summary>
-        public ICommand ShowFollowingsCommand { get; set; }
-
-        /// <summary>
-        /// The commmand to show the friends
-        /// </summary>
-        public ICommand ShowFriendsCommand { get; set; }
+        public ICommand LoadCommand { get; set; }
 
         #endregion
 
@@ -127,16 +92,9 @@ namespace Chataria.Core
             CloseEditProfileMenuCommand = new RelayCommand(CloseEditProfileMenu);
             LogoutCommand = new RelayCommand(Logout);
             ClearUserDataCommand = new RelayCommand(ClearUserData);
+            LoadCommand = new RelayCommand(async () => await LoadAsync());
 
-            // TODO: Remove this once the real back-edn is ready
-            Username = new TextEntryViewModel { Label = "Username", OriginalText = "Fayxos" };
-            Name = new TextEntryViewModel { Label = "Name", OriginalText = "Felix Haag" };
-            Email = new TextEntryViewModel { Label = "Email", OriginalText = "Email@ermail.de" };
-            Password = new PasswordEntryViewModel { Label = "Password", FakePassword = "********" };
-            PostCount = 1;
-            FollowerCount = 200;
-            FollowingCount = 100;
-            FriendCount = 20;
+            
 
             // TODO: Get from localization
             LogoutButtonText = "Logout";
@@ -147,7 +105,7 @@ namespace Chataria.Core
         #region Command Methods
 
         /// <summary>
-        /// When the attachment button is clicked show/hide the attachment popup
+        /// When the attachment button is clicked show/hide the attachment pop-up
         /// </summary>
         public void EditProfile()
         {
@@ -187,10 +145,21 @@ namespace Chataria.Core
             Name = null;
             Email = null;
             Password = null;
-            FriendCount = 0;
-            FollowerCount = 0;
-            FollowingCount = 0;
-            PostCount = 0;
+        }
+
+
+        /// <summary>
+        /// Sets the settings view model properties based on the data in the client data store
+        /// </summary>
+        public async Task LoadAsync()
+        {
+            // Get the stored credentials
+            var storedCredentials = await IoC.ClientDataStore.GetLoginCredentialsAsync();
+
+            Name = new TextEntryViewModel { Label = "Name", OriginalText = $"{storedCredentials?.FirstName} {storedCredentials?.LastName}" };
+            Username = new TextEntryViewModel { Label = "Username", OriginalText = $"{storedCredentials?.Username}" };
+            Email = new TextEntryViewModel { Label = "Email", OriginalText = $"{storedCredentials?.Email}" };
+            Password = new PasswordEntryViewModel { Label = "Password", FakePassword = "********" };
         }
 
         #endregion
