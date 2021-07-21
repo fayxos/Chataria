@@ -46,10 +46,14 @@ namespace Chataria
         private async Task ApplicationSetupAsync()
         {
             // Setup the Dna Framework
-            new DefaultFrameworkConstruction()
+            Framework.Construct<DefaultFrameworkConstruction>()
                 .AddFileLogger()
                 .UseClientDataStore()
                 .Build();
+            //new DefaultFrameworkConstruction()
+            //    .AddFileLogger()
+            //    .UseClientDataStore()
+            //    .Build();
 
             // Setup IoC
             IoC.Setup();
@@ -71,7 +75,7 @@ namespace Chataria
             // Bind a UI Manager
             IoC.Kernel.Bind<IUIManager>().ToConstant(new UIManager());
 
-            // Ensure the client data store
+            // Ensure the client data store exists
             await IoC.ClientDataStore.EnsureDataStoreAsync();
 
             // Load new settings
