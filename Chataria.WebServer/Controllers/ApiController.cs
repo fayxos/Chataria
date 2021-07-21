@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
@@ -58,6 +59,81 @@ namespace Chataria.WebServer.Controllers
 
         #endregion
 
+        /// <summary>
+        /// Tries to register for a new account on the server
+        /// </summary>
+        /// <param name="registerCredentials">The registration details</param>
+        /// <returns>returns the result of the register request</returns>
+        public async Task<ApiResponse<RegisterResultApiModel>> RegisterAsync([FromBody]RegisterCredentialsApiModel registerCredentials)
+        {
+            // TODO: Localize all strings
+            var invalidErrorMessage = "Please provide all required details to register";
+
+            // The error response for a failed login
+            var errorResponse = new ApiResponse<RegisterResultApiModel>
+            {
+                // Set error message
+                ErrorMessage = invalidErrorMessage
+            };
+
+            // Make sure there are register credentials
+            if (registerCredentials == null)
+                // Return the error message to the user
+                return errorResponse;
+
+            // Make sure there is a user name
+            if (registerCredentials.Username == null || registerCredentials.Email == null || string.IsNullOrWhiteSpace(registerCredentials.Username))
+                // Return the error message to the user
+                return errorResponse;
+
+            // Create the desired user from the given details
+            var user = new ApplicationUser
+            {
+                UserName = registerCredentials.Username,
+                FirstName = registerCredentials.FirstName,
+                LastName = registerCredentials.LastName,
+                Email = registerCredentials.Email,
+            };
+
+            // Try and create a user
+            var result = await mUserManager.CreateAsync(user, registerCredentials.Password);
+
+            // If the registration was successful...
+            if (result.Succeeded)
+            {
+                // Get the user details
+                var userIdentity = await mUserManager.FindByNameAsync(registerCredentials.Username);
+
+                // Generate an email verification code
+                var emailVerificationCode = mUserManager.GenerateEmailConfirmationTokenAsync(user);
+
+                // TODO: Email the user the verification code
+
+                // TODO: Get token
+
+                return new ApiResponse<RegisterResultApiModel>
+                {
+                    Response = new RegisterResultApiModel
+                    {
+                        FirstName = user.FirstName,
+                        LastName = user.LastName,
+                        Email = user.Email,
+                        Username = user.UserName,
+                    }
+                };
+            }
+            // Otherwise if it failed
+            else
+                // Return the failed response
+                return new ApiResponse<RegisterResultApiModel>
+                {
+                    // Aggregate all errors into a single error string
+                    ErrorMessage = result.Errors.ToList()
+                        .Select(f => f.Description)
+                        .Aggregate((a, b) => $"{a}{Environment.NewLine}{b}")
+                };
+        }
+
         [Route("api/login")]
         public async Task<ApiResponse<LoginResultApiModel>> LogInAsync([FromBody]LoginCredentialsApiModel loginCredentials)
         {
@@ -71,7 +147,7 @@ namespace Chataria.WebServer.Controllers
                 ErrorMessage = invalidErrorMessage
             };
 
-            // Make sure we have a user name
+            // Make sure there is a user name
             if (loginCredentials?.UsernameOrEmail == null || string.IsNullOrWhiteSpace(loginCredentials.UsernameOrEmail))
                 // Return the error message to the user
                 return errorResponse;
@@ -110,33 +186,9 @@ namespace Chataria.WebServer.Controllers
             // Get username
             var username = user.UserName;
 
-            // Set our tokens claims
-            var claims = new[]
-            {
-                // Unique ID for this token
-                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString("N")),
-
-                // The username using the Identity name so it fills out the HttpContext.User.Identity.Name value
-                new Claim(ClaimsIdentity.DefaultNameClaimType, username)
-            };
-
-            // Create the credentials used to generate the token
-            var credentials = new SigningCredentials(
-                // Get the secret key from configuration
-                new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Jwt:SecretKey"])),
-                // Use HS256 algorithm
-                SecurityAlgorithms.HmacSha256);
-
-            // Generate the Jwt Token
-            var token = new JwtSecurityToken(
-                issuer: Configuration["Jwt:Issuer"],
-                audience: Configuration["Jwt:Audience"],
-                claims: claims,
-                signingCredentials: credentials,
-                // Expire if not used for 3 months
-                expires: DateTime.Now.AddMonths(3)
-                );
-
+            // Get JWT token
+            var 
+            
             // Return token to user
             return new ApiResponse<LoginResultApiModel>
             {

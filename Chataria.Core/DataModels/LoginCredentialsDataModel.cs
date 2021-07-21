@@ -1,4 +1,7 @@
-﻿namespace Chataria.Core
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace Chataria.Core
 {
     /// <summary>
     /// The data model for the login credentials for a client
@@ -8,6 +11,9 @@
         /// <summary>
         /// The unique Id
         /// </summary>
+        [Key]
+        [Required]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public string Id { get; set; }
 
         /// <summary>
